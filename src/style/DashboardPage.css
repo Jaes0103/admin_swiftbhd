@@ -1,0 +1,259 @@
+
+/* Dashboard container: main flex layout */
+body {
+  margin: 0;
+  font-family: 'Century Gothic', Arial, sans-serif; /* Fallback to Arial and sans-serif */
+  padding: 0;
+  height: 100vh; /* Make body full height */
+  background-color: #e7e7e7; /* Your desired background color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-image: url('../assets/images/bantay_hayop_logo.png'); /* Background image */
+  background-attachment: fixed;
+  background-position: center;
+  overflow: auto;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: inherit; /* Inherit the background image */
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px); /* Adjust blur level here */
+  z-index: -1; /* Places it behind content */
+}
+
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background-color: #8A7EBE; /* Purple background */
+  color: white; /* White text */
+  height: 100vh;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+  .sidebar h1 {
+    font-family: 'Century Gothic', Arial, sans-serif; /* Fallback to Arial and sans-serif */
+    font-weight: 700;
+    font-size: 60px;
+    margin-bottom: 20px;
+  }
+
+.sidebar h2 {
+  font-family: 'Century Gothic', Arial, sans-serif; /* Fallback to Arial and sans-serif */
+  font-weight: 700;
+  font-size: 60px;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  display: block;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.sidebar ul li a:hover {
+  background-color: #7468A3; /* Hover effect */
+}
+
+/* Main content next to the sidebar */
+.main-content {
+  margin-left: 480px;  /* Space for sidebar */
+  padding: 10px;
+  flex-grow: 1;
+  background-color: transparent; /* Make sure main content is transparent to show body background */
+  padding-top: 60px; /* Add extra padding to push content down */
+  padding-left: 0%;
+  text-indent: 30px; /* Adjust the value as needed */
+}
+
+/* Section styling */
+.dashboard-section {
+  background-color: white; 
+  border-radius: 10px; 
+  padding: 20px; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+  margin-bottom: 20px; 
+  margin-left: -20px; 
+  width: 90%;
+}
+
+.dashboard-section h2{
+  color: #181111;
+}
+
+.main-content h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 44px;
+  margin-bottom: 20px;
+  color:#000000;
+}
+
+.dashboard-table-container {
+  overflow-x: auto; 
+  max-width: 100%; 
+}
+.dashboard-table {
+  width: 100%; /* Keep it 100% of the container */
+  min-width: 800px; /* Set a minimum width to ensure consistency */
+  border-collapse: collapse;
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+.dashboard-table th, .dashboard-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+}
+.dashboard-table th {
+  background-color: #f2f2f2; 
+  color: #333;
+  font-weight: bold;
+}
+.dashboard-table th:nth-child(1),
+.dashboard-table td:nth-child(1) {
+  width: 150px; 
+}
+.dashboard-table th:nth-child(2),
+.dashboard-table td:nth-child(2) {
+  width: 250px;
+}
+
+
+.dashboard-table th:nth-child(3),
+.dashboard-table td:nth-child(3) {
+  width: 350px; 
+}
+.dashboard-table tr:nth-child(even) {
+  background-color: #f9f9f9; /* Zebra striping for even rows */
+}
+
+.dashboard-table tr:hover {
+  background-color: #f1f1f1; 
+}
+
+.table-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.table-action-btn {
+  background-color: #6F64A9; 
+  color: white;
+  padding: 8px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.table-action-btn:hover {
+  background-color: #8A7EBE;
+}
+
+.table-action-btn.edit {
+  background-color: #4CAF50; /* Green for edit */
+}
+
+.table-action-btn.delete {
+  background-color: #F44336; /* Red for delete */
+}
+.chart-section
+{
+  width: 500px;
+  margin-top: 150px;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-right: 10px;
+  font-size: small;
+  font-family:  Arial, sans-serif; /* Fallback to Arial and sans-serif */
+}
+.chart-section h2{
+  color:#181111;
+}
+.doughnut-section h2{
+  color: #181111;
+  margin-right:20px ;
+  font-size: 40px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+
+}
+.doughnut-container{
+  align-items: center;
+  padding-left: 10px;
+  width: 500px;
+  margin-top: 20px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-left: 10px;
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.pagination button {
+  border: none;
+  background-color: rgba(138, 126, 190, 1); /* Dark purple for button */
+  color: white; /* Text color */
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: rgba(138, 126, 190, 0.8); /* Lighter purple on hover */
+}
+
+.pagination button:disabled {
+  background-color: #ccc; /* Gray color when disabled */
+  color: #666; /* Darker gray text when disabled */
+  cursor: not-allowed;
+}
+
+.pagination span {
+  margin: 0 10px;
+  color: rgba(138, 126, 190, 1); /* Color to match buttons */
+  font-weight: bold; /* Bold for better visibility */
+}

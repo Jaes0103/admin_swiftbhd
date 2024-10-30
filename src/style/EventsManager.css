@@ -1,0 +1,126 @@
+
+/* General styles remain unchanged */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: visible;
+}
+
+body {
+    font-family: 'Montserrat', Arial, sans-serif; 
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 3.0em;
+    font-weight: 700;
+    color: #444;
+}
+
+.container {
+    display: flex; /* Change to flex to align sidebar and content */
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 20px; /* Adjust padding to balance layout */
+}
+
+/* Events list styles */
+.events-list {
+    flex-grow: 1; /* Allow this section to take remaining space */
+    margin-left: 20px; /* Space between sidebar and events list */
+}
+
+/* Add styles for the events box */
+.events-box {
+    background-color: white; /* Set background for events box */
+    padding: 20px; /* Inner padding for the box */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin-top: 20px; /* Margin at the top of the events box */
+}
+
+.events-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.events-list ul li {
+    padding: 20px;
+    border-bottom: 1px solid #ccc; /* Optional: keep or remove */
+    font-size: 1.25em;
+}
+
+.events-list ul li:last-child {
+    border-bottom: none; /* No border for the last item */
+}
+
+.container img,
+.container video {
+    border-radius: 4px;
+    width: 200px;
+}
+
+/* Updated styles for the pagination */
+.pagination {
+    display: flex; /* Align items in a row */
+    justify-content: center; /* Center the pagination */
+    align-items: center; /* Vertically align items */
+    margin-top: 20px; /* Space above pagination */
+    padding: 10px; /* Padding around pagination */
+}
+
+.pagination-button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    margin: 0 10px; /* Space between buttons */
+    font-size: 24px; /* Adjust icon size */
+    color: #6351a2; /* Color for the icons */
+    transition: color 0.3s; /* Transition for hover effect */
+}
+
+.pagination-button:hover {
+    color: #0056b3; /* Color on hover */
+}
+
+.pagination-button:disabled {
+    color: #cccccc; /* Color for disabled buttons */
+    cursor: not-allowed;
+}
+
+button {
+    background-color: #6351a2;
+    color: white;
+    padding: 15px 20px;
+    margin: 15px 0;
+    font-size: 1.25em;
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}

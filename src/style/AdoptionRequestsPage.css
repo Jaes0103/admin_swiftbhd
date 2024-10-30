@@ -1,0 +1,18 @@
+.adoption-requests-container {
+    padding: 20px;
+}
+
+.adoption-requests-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.adoption-requests-table th, .adoption-requests-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.adoption-requests-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}

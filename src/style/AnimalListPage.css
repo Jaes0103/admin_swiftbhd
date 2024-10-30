@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+.animal-list-page {
+    padding: 20px;
+    font-family: 'Montserrat', sans-serif; /* Apply font-family to the main container */
+    background-color: #E8E2DB; 
+    min-height: 100vh; 
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    margin: 20px; 
+}
+
+.controls label {
+    margin-right: 10px; /* Add some space to the right of the label */
+}
+
+.controls select, 
+.controls .search-input {
+    padding: 10px; /* Add padding to controls */
+    font-size: 16px; /* Adjust font size for readability */
+    border: 1px solid #ddd; /* Add border for inputs */
+    border-radius: 5px; /* Rounded corners */
+    transition: border-color 0.3s; /* Smooth transition for focus */
+}
+
+.controls select:focus, 
+.controls .search-input:focus {
+    border-color: #6351a2; /* Highlight border on focus */
+    outline: none; /* Remove default outline */
+}
+
+.controls .search-input {
+    flex-grow: 1; /* Make search input grow to fill available space */
+    margin-left: 10px; /* Space between select and search input */
+}
+
+.animal-table {
+    width: 100%; 
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 18px;
+    background-color: #ffffff; /* Ensure table has a white background */
+    border-radius: 5px; /* Rounded corners for table */
+    overflow: hidden; /* Prevent overflow for rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.animal-table th, .animal-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.animal-table thead th {
+    background-color: #FFFFFF; 
+    color: #333;
+    font-weight: 700;  
+    font-size: 21px;
+}
+
+.animal-table tbody td {
+    font-weight: 400; 
+}
+
+.animal-table tbody tr:nth-child(odd) {
+    background-color: #e5e1ff; /* Light purple for odd rows */
+}
+
+.animal-table tbody tr:nth-child(even) {
+    background-color: #dfeefa; /* Light blue for even rows */
+}
+
+.animal-table img.animal-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.paw-icon-container {
+    width: 60px; /* Adjusted for better alignment */
+    height: 60px; /* Adjusted for better alignment */
+    background-color: #6351a2e1; 
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.default-paw-icon {
+    font-size: 30px; /* Adjusted icon size for better fit */
+    color: #2c2a33;
+}
+
+
+button {
+    padding: 10px 15px;
+    background-color: #6351a2; /* Background color for button */
+    color: white; /* Text color for button */
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer on hover */
+    transition: background-color 0.3s ease; /* Smooth transition for hover */
+}
+
+button:hover {
+    background-color: #4a3e86; /* Darker shade on hover */
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center; /* Center the pagination controls */
+    margin-top: 20px; /* Space above the pagination */
+}
+
+.pagination {
+    display: flex; /* Align pagination elements in a row */
+    align-items: center; /* Center align vertically */
+}
+
+.prev-next-button {
+    background-color: transparent; 
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    transition: color 0.3s;
+    color: #6351a2; /* Icon color */
+}
+
+.prev-next-button:hover {
+    color: #4e3f82; /* Darker color on hover */
+}
+
+.page-button {
+    background-color: #e0e0e0; /* Light gray background */
+    border: none;
+    padding: 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.page-button.active {
+    background-color: #6351a2; /* Highlighted active page */
+    color: white; /* White text on active */
+}
+
+.page-button:hover {
+    background-color: #4e3f82; /* Darker on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .controls {
+        flex-direction: column; /* Stack controls vertically on small screens */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    .controls label {   
+        margin-bottom: 20px; /* Space below label */
+    }
+
+    .controls select, 
+    .controls .search-input {
+        width: 100%; /* Full width for inputs */
+        margin-left: 0; /* Remove left margin */
+    }
+    
+    .animal-table {
+        font-size: 16px; /* Smaller font for tables on small screens */
+    }
+}
+.table-container {
+    margin: 20px 0; /* Add space above and below the table */
+    padding: 20px; /* Optional: Add some padding inside the container */
+    background-color: #ffffff; /* Set background color to match the table */
+    border-radius: 10px; /* Optional: Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    width: 100%; 
+    max-width: 1200px;
+    min-width: 800px;
+    min-height: 900px;
+    max-height: 1000px; 
+}

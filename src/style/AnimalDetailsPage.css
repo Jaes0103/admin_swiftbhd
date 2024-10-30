@@ -1,0 +1,294 @@
+/* General Font Styles */
+body {
+  font-family: Arial, sans-serif; /* Set the font for the entire page */
+  line-height: 1.6; /* Improve readability */
+}
+
+/* Main container to ensure page scrolls */
+html, body {
+  height: 100%; /* Ensures that the page takes the full height of the viewport */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal overflow (side scrolling) */
+  overflow-y: auto; /* Allow vertical scrolling */
+}
+
+.animal-details-page {
+  padding: 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  overflow-y: auto; 
+}
+.animal-box {
+  border: 1px solid #ccc; /* Add border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 16px; /* Inner padding */
+  margin: 20px 0; /* Spacing above and below */
+  background-color: #f9f9f9; /* Background color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+/* Box Styling */
+.box {
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #f9f9f9; /* Light background */
+  padding: 20px; /* Internal spacing */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin-bottom: 20px; /* Spacing below the box */
+}
+
+.animal-details-page h1 {
+  font-size: 2.5em; 
+  margin-top: 10px;
+}
+
+.animal-details-page h2 {
+  font-size: 2em; 
+  color: #6251A2;
+}
+
+/* Back Button Styling */
+.animal-details-page button {
+  background-color: #624DE3; /* Match your theme color */
+  color: white; /* White text for contrast */
+  padding: 10px 15px; /* Padding inside the button */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer on hover */
+  margin-bottom: 20px; /* Space below the button */
+  transition: background-color 0.3s; /* Smooth transition */
+}
+
+.animal-details-page button:hover {
+  background-color: #5a3db5; /* Darker shade on hover */
+}
+
+.animal-details-page h3 {
+  color: #6251A2;
+}
+
+/* Flexbox for Two Column Layout */
+.animal-details-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows content to wrap if screen is small */
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start; /* Align items to the top of the container */
+}
+
+/* Column for Animal Details */
+.animal-details-column {
+  flex: 1;
+}
+
+/* Adjust styling for the image container */
+.animal-details-image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Make sure the image container is responsive */
+  max-width: 350px; /* Set a max width for the image container */
+}
+
+/* Styling for the image itself */
+.animal-details-image {
+  width: 100%;
+  max-width: 300px; /* Adjust max-width to keep the image within bounds */
+  height: auto; /* Let the height adjust to the image aspect ratio */
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+/* Placeholder for when there is no image */
+.no-image-placeholder {
+  margin-top: 20px;
+  width: 200px;
+  height: 200px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  border-radius: 10px;
+  margin-bottom: 35px;
+  font-size: 18px;
+}
+
+/* Styling for paragraphs inside each column */
+.animal-details-column p {
+  margin: 16px 0;
+  font-size: 16px;
+}
+
+/* Specific styles for the details to ensure text alignment */
+.animal-details-column strong {
+  display: inline-block;
+  width: 100px; /* Adjust the width for label alignment */
+  font-weight: bold;
+}
+
+/* General Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Remove spacing between table borders */
+  margin-bottom: 20px; /* Space between tables and other elements */
+}
+
+/* Table Header Styling */
+thead th {
+  background-color: #f4f4f4; /* Light background for headers */
+  font-weight: bold;
+  padding: 10px;
+  text-align: left;
+  border-bottom: 2px solid #ddd; /* Solid border between header and body */
+  color: #333; /* Darker color for text */
+}
+
+/* Table Body Styling */
+tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* Light border between rows */
+  vertical-align: middle; /* Align content vertically */
+  color: #555; /* Slightly lighter text color */
+}
+
+/* Table Row Hover Effect */
+tbody tr:hover {
+  background-color: #f9f9f9; /* Subtle hover effect for rows */
+}
+
+/* Button Styling inside Table */
+table button {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #624DE3;
+}
+
+table button i {
+  margin-right: 5px;
+}
+
+table button:hover {
+  background-color: #ddd; /* Slight color change on hover */
+}
+
+/* Responsive Table Styling */
+@media (max-width: 768px) {
+  table, thead, tbody, th, td, tr {
+      display: block; /* Make table rows and cells block elements on smaller screens */
+  }
+  
+  /* Styling for table headers in small screens */
+  thead {
+      display: none; /* Hide the table headers */
+  }
+  
+  /* Make table cells behave like rows with labels */
+  tbody tr {
+      margin-bottom: 10px; /* Add some space between rows */
+  }
+  
+  tbody td {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border: none; /* Remove borders for mobile */
+      border-bottom: 1px solid #eee;
+  }
+  
+  tbody td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      color: #666;
+  }
+}
+
+/* Dialog Overlay */
+.dialog-overlay {
+  position: fixed; /* Fixed position to cover the entire viewport */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex; /* Use flexbox to center content */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
+/* Dialog Box */
+.dialog-box {
+  background-color: white; /* Background for the dialog */
+  padding: 20px; /* Padding inside the dialog */
+  border-radius: 8px; /* Slightly more rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+  width: 400px; /* Set a width for the dialog */
+  max-width: 90%; /* Responsive width */
+  font-family: Arial, sans-serif; /* Use the same font as animal details page */
+}
+
+/* Dialog Title */
+.dialog-box h4 {
+  margin-bottom: 15px; /* Spacing below the title */
+  font-size: 1.5em; /* Adjust title size */
+  text-align: center; /* Center the title */
+  color: #6251A2;
+}
+
+/* Dialog Form Styling */
+.dialog-box form {
+  display: flex; /* Use flexbox for form layout */
+  flex-direction: column; /* Stack inputs vertically */
+}
+
+/* Form Group */
+.dialog-box .form-group {
+  display: flex; 
+  flex-direction: column;
+  margin-bottom: 15px; 
+}
+
+/* Label Styles */
+.dialog-box label {
+  margin-bottom: 5px; 
+  font-weight: bold;
+}
+
+/* Input Styles */
+.dialog-box input {
+  padding: 10px;
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  width: 100%; 
+  box-sizing: border-box;
+}
+
+/* Button Styling in Dialog */
+.dialog-box button {
+  padding: 10px; /* Padding inside buttons */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners for buttons */
+  cursor: pointer; /* Pointer on hover */
+  margin-top: 10px; /* Space above buttons */
+  transition: background-color 0.3s; /* Smooth background transition */
+  width: 100%; /* Ensure buttons take full width */
+}
+
+.dialog-box button[type="submit"] {
+  background-color: #f0f0f0; /* Match button background */
+  color: #624DE3; /* Button text color */
+}
+
+.dialog-box button[type="button"] {
+  background-color: #f44336; /* Red background for cancel button */
+  color: white; /* White text */
+}
+
+.dialog-box button:hover {
+  opacity: 0.9; /* Slight transparency on hover */
+}

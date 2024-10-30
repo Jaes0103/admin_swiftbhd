@@ -1,0 +1,98 @@
+/* src/style/MapPage.css */
+
+/* Full height for the Leaflet container */
+html, body, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Ensure full height */
+}
+
+/* Container for the map and sidebar */
+.map-container {
+    position: relative; /* Needed for absolute positioning of the sidebar */
+    height: 100vh; /* Full height for the map container */
+    width: 100vw; /* Full width for the map container */
+}
+.sidebar-component{
+    position: absolute; /* Position it absolutely to float over the map */
+    top: 20px; /* Spacing from the top */
+    left: 20px; /* Spacing from the left */
+    padding: 10px; /* Padding for the sidebar */
+    border-radius: 5px; /* Rounded corners for the sidebar */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Optional shadow */
+    max-height: 80vh; /* Maximum height for the sidebar */
+    overflow-y: auto; /* Scroll if content overflows */
+    z-index: 1000; /* Ensure it's on top of the map */
+}
+/* Sidebar styling */
+.map-sidebar {
+    position: absolute; /* Position it absolutely to float over the map */
+    top: 20px; /* Spacing from the top */
+    right: 20px; /* Spacing from the left */
+    width: 500px; /* Fixed width for the sidebar */
+    background: rgba(255, 255, 255, 0.9); /* Background color with transparency */
+    padding: 10px; /* Padding for the sidebar */
+    border-radius: 5px; /* Rounded corners for the sidebar */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Optional shadow */
+    max-height: 80vh; /* Maximum height for the sidebar */
+    overflow-y: auto; /* Scroll if content overflows */
+    z-index: 1000; /* Ensure it's on top of the map */
+}
+
+/* Full height for the Leaflet map */
+.leaflet-container {
+    height: 100%; /* Ensure the map takes the full height of the container */
+}
+
+/* Custom marker circle styling */
+.custom-marker-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; /* Width of the circle */
+    height: 30px; /* Height of the circle */
+    border-radius: 50%; /* Make it circular */
+    background-color: #8a7ebe; /* Background color */
+}
+
+/* Error message styling */
+.error {
+    color: red; /* Change color for visibility */
+    margin-bottom: 10px; /* Space below error */
+}
+
+/* Header styling */
+.header {
+    position: absolute; /* Position the header absolutely */
+    top: 10px; /* Spacing from the top */
+    left: 600px;
+    z-index: 1000; 
+    background: rgba(255, 255, 255, 0.8); 
+    padding: 10px;
+    border-radius: 5px; 
+    font-size: xx-large;
+}
+.legend {
+    position: absolute;
+    top: 100px; 
+    left: 400px; 
+    z-index: 1000; /* Ensure it is above other elements */
+    background: rgba(255, 255, 255, 0.514); /* Slightly transparent background for visibility */
+    padding: 10px; /* Padding for better appearance */
+    border-radius: 5px; /* Rounded corners for the header */
+}
+
+/* Legend item styling */
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin: 5px 0; 
+}
+
+/* Legend color box styling */
+.legend-color {
+    width: 20px; 
+    height: 20px;
+    border-radius: 3px; 
+    margin-right: 10px; 
+}

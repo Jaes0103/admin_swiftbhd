@@ -1,0 +1,97 @@
+/* Sidebar container */
+.sidebar {
+  width: 350px; /* Increased width */
+  background-color: #8A7EBE; /* Purple background */
+  color: white;
+  height: 100vh;
+  padding-top: 20px;
+  padding-left: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;
+}
+
+/* Sidebar header styling */
+.sidebar-header {
+  margin-bottom: 30px;
+}
+
+.sidebar-header h2 {
+    font-family: 'Arial', sans-serif; /* Fallback to Arial and sans-serif */
+    font-weight: 700;
+    text-indent: 30px; /* Adjust the value as needed */
+    padding-right: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 40px; /* Increased header font size */
+    color: white;
+}
+
+/* Sidebar list styling */
+.sidebar-list {
+  list-style: none;
+  font-family: 'Arial', sans-serif; /* Fallback to Arial and sans-serif */
+  font-weight: 700;
+  text-indent: 30px; /* Adjust the value as needed */
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar .sidebar-list li {
+  margin-bottom: 30px; /* Space between items */
+}
+
+
+/* Sidebar link styling */
+.sidebar-link {
+  font-family: 'Poppins', sans-serif;
+  font-size: 50px; /* Increased font size */
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+.sidebar .sidebar-link {
+  font-family: 'Poppins', sans-serif;
+  font-size: 23px; /* Increased font size */
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Sidebar icons styling */
+.sidebar-icon {
+  font-size: 30px; 
+  margin-right: 10px;
+}
+
+.sidebar-link:hover {
+  background-color: rgba(255, 255, 255, 0.1); 
+  transform: scale(1.05); 
+}
+
+/* Sidebar footer (logout link) */
+.sidebar-footer {
+  margin-bottom: 30px;
+  margin-top: auto;
+}
+
+.sidebar-footer .sidebar-link {
+  font-size: 20px; /* Increased footer link font size */
+}
+
+/* Active menu item styling */
+.sidebar-link.active {
+  background-color: rgba(255, 255, 255, 0.1); /* Active link color */
+}

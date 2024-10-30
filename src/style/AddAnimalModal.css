@@ -1,0 +1,36 @@
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed; /* Make it fixed to the viewport */
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+/* Modal Content */
+.modal-content {
+    background: white; /* White background for the modal */
+    padding: 40px; /* Padding inside the modal */
+    border-radius: 8px; /* Rounded corners */
+    width: 90%; /* Full width but not exceeding max-width */
+    max-width: 550px; /* Set a max-width for larger screens */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    animation: fadeIn 0.3s; /* Animation for modal appearing */
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
