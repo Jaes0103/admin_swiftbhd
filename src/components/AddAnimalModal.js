@@ -9,17 +9,45 @@ const AddAnimalModal = ({ isOpen, onClose, onAddAnimal }) => {
     const [location, setLocation] = useState('');
     const [personality, setPersonality] = useState('');
     const [status, setStatus] = useState('');
-    const [imgFile, setImgFile] = useState(null); // State for image file
+    const [imgFile, setImgFile] = useState(null);
     const [gender, setGender] = useState('');
-    const [background, setBackground] = useState(''); // State for background text field
+    const [background, setBackground] = useState('');
+
+    const [errors, setErrors] = useState({});
 
     const handleImageChange = (e) => {
-        setImgFile(e.target.files[0]); // Update state with selected file
+        const file = e.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            setImgFile(file);
+            setErrors(prevErrors => ({ ...prevErrors, imgFile: '' }));
+        } else {
+            setErrors(prevErrors => ({ ...prevErrors, imgFile: 'Please select a valid image file.' }));
+        }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
+        const newErrors = {};
+
+        // Validate fields
+        if (!name || /\d/.test(name)) newErrors.name = 'Name must be a valid text without numbers.';
+        if (!type || /\d/.test(type)) newErrors.type = 'Type must be a valid text without numbers.';
+        if (!age || !/^\d+$/.test(age)) newErrors.age = 'Age must be a number.';
+        if (!breed || /\d/.test(breed)) newErrors.breed = 'Breed must be a valid text without numbers.';
+        if (!location || /\d/.test(location)) newErrors.location = 'Location must be a valid text without numbers.';
+        if (!personality || /\d/.test(personality)) newErrors.personality = 'Personality must be a valid text without numbers.';
+        if (!status || /\d/.test(status)) newErrors.status = 'Status must be a valid text without numbers.';
+        if (!background || /\d/.test(background)) newErrors.background = 'Background must be a valid text without numbers.';
+        if (!gender || /\d/.test(gender)) newErrors.gender = 'Gender must be a valid text without numbers.';
+        if (!imgFile) newErrors.imgFile = 'Image file is required.';
+
+        // Check if there are any validation errors
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return; // Prevent form submission if errors exist
+        }
+
         const newAnimal = { 
             name, 
             type, 
@@ -29,16 +57,12 @@ const AddAnimalModal = ({ isOpen, onClose, onAddAnimal }) => {
             personality, 
             status, 
             gender,
-            background // Include the background field in the object
+            background,
+            imgFile
         };
 
-        // If an image file is selected, add it to the newAnimal object
-        if (imgFile) {
-            newAnimal.imgFile = imgFile; // Include the image file in the object
-        }
-
         onAddAnimal(newAnimal);
-        // Reset the form
+        // Reset form
         setName('');
         setType('');
         setAge('');
@@ -47,17 +71,19 @@ const AddAnimalModal = ({ isOpen, onClose, onAddAnimal }) => {
         setPersonality('');
         setStatus('');
         setGender('');
-        setBackground(''); // Reset background field
-        setImgFile(null); // Reset image file
+        setBackground('');
+        setImgFile(null);
+        setErrors({});
     };
 
     if (!isOpen) return null;
 
     return (
-        <div className="modal-overlay"> {/* Modal overlay for background */}
-            <div className="modal-content"> {/* Modal content area */}
+        <div className="modal-overlay"> 
+            <div className="modal-content">
                 <h2>Add New Animal</h2>
                 <form onSubmit={handleSubmit}>
+                    {/* Name Field */}
                     <input
                         type="text"
                         value={name}
@@ -65,6 +91,9 @@ const AddAnimalModal = ({ isOpen, onClose, onAddAnimal }) => {
                         placeholder="Name"
                         required
                     />
+                    {errors.name && <span className="error">{errors.name}</span>}
+
+                    {/* Type Field */}
                     <input
                         type="text"
                         value={type}
@@ -72,13 +101,19 @@ const AddAnimalModal = ({ isOpen, onClose, onAddAnimal }) => {
                         placeholder="Type"
                         required
                     />
+                    {errors.type && <span className="error">{errors.type}</span>}
+
+                    {/* Age Field */}
                     <input
-                        type="number"
+                        type="text"
                         value={age}
                         onChange={(e) => setAge(e.target.value)}
                         placeholder="Age"
                         required
                     />
+                    {errors.age && <span className="error">{errors.age}</span>}
+
+                    {/* Breed Field */}
                     <input
                         type="text"
                         value={breed}
@@ -86,6 +121,9 @@ const AddAnimalModal = ({ isOpen, onClose, onAddAnimal }) => {
                         placeholder="Breed"
                         required
                     />
+                    {errors.breed && <span className="error">{errors.breed}</span>}
+
+                    {/* Location Field */}
                     <input
                         type="text"
                         value={location}
@@ -93,6 +131,9 @@ const AddAnimalModal = ({ isOpen, onClose, onAddAnimal }) => {
                         placeholder="Location"
                         required
                     />
+                    {errors.location && <span className="error">{errors.location}</span>}
+
+                    {/* Personality Field */}
                     <input
                         type="text"
                         value={personality}
@@ -100,6 +141,9 @@ const AddAnimalModal = ({ isOpen, onClose, onAddAnimal }) => {
                         placeholder="Personality"
                         required
                     />
+                    {errors.personality && <span className="error">{errors.personality}</span>}
+
+                    {/* Status Field */}
                     <input
                         type="text"
                         value={status}
@@ -107,20 +151,28 @@ const AddAnimalModal = ({ isOpen, onClose, onAddAnimal }) => {
                         placeholder="Status"
                         required
                     />
+                    {errors.status && <span className="error">{errors.status}</span>}
+
+                    {/* Background Field */}
                     <input
                         type="text"
-                        value={background} // Add input for background
+                        value={background}
                         onChange={(e) => setBackground(e.target.value)}
                         placeholder="Background"
                         required
                     />
-                    {/* Image input for picking the image */}
+                    {errors.background && <span className="error">{errors.background}</span>}
+
+                    {/* Image Field */}
                     <input
                         type="file"
                         onChange={handleImageChange} 
                         accept="image/*" 
                         required
                     />
+                    {errors.imgFile && <span className="error">{errors.imgFile}</span>}
+
+                    {/* Gender Field */}
                     <input
                         type="text"
                         value={gender}
@@ -128,6 +180,8 @@ const AddAnimalModal = ({ isOpen, onClose, onAddAnimal }) => {
                         placeholder="Gender"
                         required
                     />
+                    {errors.gender && <span className="error">{errors.gender}</span>}
+
                     <button type="submit">Add Animal</button>
                     <button type="button" onClick={onClose}>Cancel</button>
                 </form>

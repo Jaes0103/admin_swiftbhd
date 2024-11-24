@@ -9,6 +9,7 @@ import ApproveRequestModal from './ApproveRequestModal';
 
 
 const AdoptableAnimalsPage = () => {
+    const [errors, setErrors] = useState({});
     const [adoptableAnimals, setAdoptableAnimals] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -24,9 +25,10 @@ const AdoptableAnimalsPage = () => {
     const [setIsModalOpen] = useState(false);
     const [adoptionRequests, setAdoptionRequests] = useState([]);
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-    const [isApproveModalOpen, setIsApproveModalOpen] = useState(false); // Modal state for approval
-    const [requestToApprove, setRequestToApprove] = useState(null); // Track the request being approved
+    const [isApproveModalOpen, setIsApproveModalOpen] = useState(false); 
+    const [requestToApprove, setRequestToApprove] = useState(null); 
     const [adoptionFee, setAdoptionFee] = useState(''); 
+    
     const [newAnimal, setNewAnimal] = useState({
         id: null,
         name: '',
@@ -42,7 +44,7 @@ const AdoptableAnimalsPage = () => {
         img: null,
         imgurl: '',
     });
-    
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5; 
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -75,14 +77,14 @@ const AdoptableAnimalsPage = () => {
     };
     
     const handleApproveRequest = (request) => {
-        console.log('Request to approve:', request); // Should log the full request object
+        console.log('Request to approve:', request);
         setRequestToApprove(request);
         setAdoptionFee('');
         setIsApproveModalOpen(true);
     };
     
     const handleApprove = async (fee) => {
-        console.log('Approving request ID:', requestToApprove?.id); // Check ID here
+        console.log('Approving request ID:', requestToApprove?.id); 
         if (!requestToApprove || !requestToApprove.id) {
             console.error('No request to approve or request ID is missing');
             return;
@@ -91,9 +93,9 @@ const AdoptableAnimalsPage = () => {
         try {
             console.log(`Sending PUT request to: /api/admin/adoption_requests/${requestToApprove.id}`);
             const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/admin/adoption-requests/${requestToApprove.id}`, {
-                adoption_fee: parseFloat(fee), // Send only the adoption fee to the backend
+                adoption_fee: parseFloat(fee), 
             });
-            console.log('Approval response:', response.data); // Log the response
+            console.log('Approval response:', response.data); 
         } catch (error) {
             console.error('Error approving request:', error);
         } finally {
@@ -109,7 +111,39 @@ const AdoptableAnimalsPage = () => {
     }, []);
     const handleAnimalChange = (e) => {
         const { name, value } = e.target;
-        setNewAnimal({ ...newAnimal, [name]: value });
+    
+       
+        let error = "";
+    
+        switch (name) {
+            case "age":
+                if (!/^\d*$/.test(value)) { 
+                    error = "Age must be a number.";
+                }
+                break;
+            case "name":
+            case "type":
+            case "breed":
+            case "personality":
+            case "health_status":
+            case "shelter":
+            case "special_needs":
+            case "background":
+                if (/\d/.test(value)) { // Disallow numbers in text fields
+                    error = `${name.charAt(0).toUpperCase() + name.slice(1)} must not contain numbers.`;
+                }
+                break;
+            default:
+                break;
+        }
+        setErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: error,
+        }));
+    
+        if (!error) {
+            setNewAnimal({ ...newAnimal, [name]: value });
+        }
     };
 
     const handleImageChange = (e) => {
@@ -263,152 +297,161 @@ const AdoptableAnimalsPage = () => {
             <Sidebar />
                 <h1>Adoptable Animals</h1>
                 <button className='add-animal-button' onClick={toggleModal}>Add Adoptable Animal</button>
-            {isModalOpen && (
+                {isModalOpen && (
                 <div className="dialog-overlay">
                     <div className="dialog-box">
                         <span className="close" onClick={toggleModal}>
                             &times;
                         </span>
                         <h4>{editMode ? 'Edit Adoptable Animal' : 'Add Adoptable Animal'}</h4>
-                            <form onSubmit={handleSubmit}>
-                                <div className="form-grid">
-                                    {/* First column */}
-                                    <div className="form-group">
-                                        <label>Name:</label>
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            value={newAnimal.name}
-                                            onChange={handleAnimalChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Type:</label>
-                                        <input
-                                            type="text"
-                                            name="type"
-                                            value={newAnimal.type}
-                                            onChange={handleAnimalChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Breed:</label>
-                                        <input
-                                            type="text"
-                                            name="breed"
-                                            value={newAnimal.breed}
-                                            onChange={handleAnimalChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Age:</label>
-                                        <input
-                                            type="text"
-                                            name="age"
-                                            value={newAnimal.age}
-                                            onChange={handleAnimalChange}
-                                            required
-                                        />
-                                    </div>
+                        <form onSubmit={handleSubmit}>
+                        <div className="form-grid">
+                            <div className="form-group">
+                                <label>Name:</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    value={newAnimal.name}
+                                    onChange={handleAnimalChange}
+                                    required
+                                />
+                                {errors.name && <span className="error">{errors.name}</span>}
+                            </div>
+                            <div className="form-group">
+                                <label>Type:</label>
+                                <input
+                                    type="text"
+                                    name="type"
+                                    value={newAnimal.type}
+                                    onChange={handleAnimalChange}
+                                    required
+                                />
+                                {errors.type && <span className="error">{errors.type}</span>}
+                            </div>
+                            <div className="form-group">
+                                <label>Breed:</label>
+                                <input
+                                    type="text"
+                                    name="breed"
+                                    value={newAnimal.breed}
+                                    onChange={handleAnimalChange}
+                                    required
+                                />
+                                {errors.breed && <span className="error">{errors.breed}</span>}
+                            </div>
 
-                                    {/* Second column */}
-                                    <div className="form-group">
-                                        <label>Size:</label>
-                                        <input
-                                            type="text"
-                                            name="size"
-                                            value={newAnimal.size}
-                                            onChange={handleAnimalChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Personality:</label>
-                                        <input
-                                            type="text"
-                                            name="personality"
-                                            value={newAnimal.personality}
-                                            onChange={handleAnimalChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Health Status:</label>
-                                        <input
-                                            type="text"
-                                            name="health_status"
-                                            value={newAnimal.health_status}
-                                            onChange={handleAnimalChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Shelter:</label>
-                                        <input
-                                            type="text"
-                                            name="shelter"
-                                            value={newAnimal.shelter}
-                                            onChange={handleAnimalChange}
-                                            required
-                                        />
-                                    </div>
-                                </div>
+                            <div className="form-group">
+                                <label>Age:</label>
+                                <input
+                                    type="text"
+                                    name="age"
+                                    value={newAnimal.age}
+                                    onChange={handleAnimalChange}
+                                    required
+                                />
+                                {errors.age && <span className="error">{errors.age}</span>}
+                            </div>
+                            <div className="form-group">
+                                <label>Size:</label>
+                                <input
+                                    type="text"
+                                    name="size"
+                                    value={newAnimal.size}
+                                    onChange={handleAnimalChange}
+                                    required
+                                />
+                                {errors.size && <span className="error">{errors.size}</span>}
+                            </div>
+                            <div className="form-group">
+                                <label>Personality:</label>
+                                <input
+                                    type="text"
+                                    name="personality"
+                                    value={newAnimal.personality}
+                                    onChange={handleAnimalChange}
+                                    required
+                                />
+                                {errors.personality && <span className="error">{errors.personality}</span>}
+                            </div>
 
-                                {/* Image display section */}
-                                {newAnimal.imgurl && (
-                                    <div className="form-group">
-                                        <label>Current Image:</label>
-                                        <img
-                                            src={newAnimal.imgurl}
-                                            alt={newAnimal.name}
-                                            style={{ width: '100px', height: 'auto' }}
-                                        />
-                                    </div>
-                                )}
-                                
-                                {/* Image upload section */}
-                                <div className="form-group">
-                                    <label>Image:</label>
-                                    <input
-                                        type="file"
-                                        name="img"
-                                        accept="image/*"
-                                        onChange={handleImageChange}
-                                        required={!editMode}
-                                    />
-                                </div>
+                            <div className="form-group">
+                                <label>Health Status:</label>
+                                <input
+                                    type="text"
+                                    name="health_status"
+                                    value={newAnimal.health_status}
+                                    onChange={handleAnimalChange}
+                                    required
+                                />
+                                {errors.health_status && <span className="error">{errors.health_status}</span>}
+                            </div>
 
-                                {/* Special Needs and Background fields */}
-                                <div className="form-group">
-                                    <label>Special Needs:</label>
-                                    <input
-                                        type="text"
-                                        name="special_needs"
-                                        value={newAnimal.special_needs}
-                                        onChange={handleAnimalChange}
-                                        required
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label>Background:</label>
-                                    <input
-                                        type="text"
-                                        name="background"
-                                        value={newAnimal.background}
-                                        onChange={handleAnimalChange}
-                                        required
-                                    />
-                                </div>
-                                <button type="submit">
-                                    {editMode ? 'Update Animal' : 'Add Animal'}
-                                </button>
-                                <button type="button" onClick={toggleModal}>
-                                    Cancel
-                                </button>
-                            </form>
+                            <div className="form-group">
+                                <label>Shelter:</label>
+                                <input
+                                    type="text"
+                                    name="shelter"
+                                    value={newAnimal.shelter}
+                                    onChange={handleAnimalChange}
+                                    required
+                                />
+                                {errors.shelter && <span className="error">{errors.shelter}</span>}
+                            </div>
+                        </div>
+
+                        {newAnimal.imgurl && (
+                            <div className="form-group">
+                                <label>Current Image:</label>
+                                <img
+                                    src={newAnimal.imgurl}
+                                    alt={newAnimal.name}
+                                    style={{ width: '100px', height: 'auto' }}
+                                />
+                            </div>
+                        )}
+                        <div className="form-group">
+                            <label>Image:</label>
+                            <input
+                                type="file"
+                                name="img"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                required={!editMode}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Special Needs:</label>
+                            <input
+                                type="text"
+                                name="special_needs"
+                                value={newAnimal.special_needs}
+                                onChange={handleAnimalChange}
+                                required
+                            />
+                            {errors.special_needs && <span className="error">{errors.special_needs}</span>}
+                        </div>
+
+                        <div className="form-group">
+                            <label>Background:</label>
+                            <input
+                                type="text"
+                                name="background"
+                                value={newAnimal.background}
+                                onChange={handleAnimalChange}
+                                required
+                            />
+                            {errors.background && <span className="error">{errors.background}</span>}
+                        </div>
+
+                        <button type="submit">
+                            {editMode ? 'Update Animal' : 'Add Animal'}
+                        </button>
+                        <button type="button" onClick={toggleModal}>
+                            Cancel
+                        </button>
+                    </form>
+
 
                     </div>
                 </div>

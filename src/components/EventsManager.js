@@ -16,13 +16,12 @@ const EventManager = () => {
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [passwordStrength, setPasswordStrength] = useState('');
-    
-    // Pagination state
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
 
     useEffect(() => {
-        fetchEvents(); // Fetch events on component mount
+        fetchEvents(); 
     }, []);
 
     const fetchEvents = async () => {
@@ -97,9 +96,9 @@ const EventManager = () => {
             }
 
             setSuccessMessage('Event created successfully!');
-            fetchEvents(); // Refresh the event list
+            fetchEvents(); 
             setEventDetails({ event_name: '', event_date: '', imgFile: null, vidFile: null, password: '' });
-            setFormVisible(false); // Hide form after submission
+            setFormVisible(false); 
         } catch (error) {
             console.error('Error during event submission:', error);
             setError('Error creating event. Please try again later.');
@@ -116,7 +115,6 @@ const EventManager = () => {
         }
     };
 
-    // Pagination Logic
     const totalPages = Math.ceil(events.length / itemsPerPage);
     const displayedEvents = events.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
@@ -166,8 +164,6 @@ const EventManager = () => {
                         ))}
                     </ul>
                 </div>
-
-                {/* Pagination Controls with Icons */}
                 <div className="pagination">
                     <button onClick={handlePrevPage} disabled={currentPage === 1} className="pagination-button">
                         <i className="fa fa-chevron-left"></i>

@@ -2,7 +2,7 @@ import React from 'react';
 import '../style/ConfirmationModal.css'; 
 
 const ConfirmationModal = ({ isOpen, message, onConfirm, onCancel, title = "Confirmation", confirmText = "Yes", cancelText = "No" }) => {
-    if (!isOpen) return null; // Return null if modal should not be open
+    if (!isOpen) return null; 
 
     return (
         <div className="confirmation-modal">

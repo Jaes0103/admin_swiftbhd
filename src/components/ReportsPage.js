@@ -7,7 +7,7 @@ import Sidebar from './Sidebar';
 const ReportsPage = () => {
   const [reports, setReports] = useState([]);
   const [rescuedAnimals, setRescuedAnimals] = useState([]); 
-  const [falseReports, setFalseReports] = useState([]); // State for false reports
+  const [falseReports, setFalseReports] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [isRecent, setIsRecent] = useState(true);
@@ -64,7 +64,7 @@ const ReportsPage = () => {
 
   const totalPagesReports = Math.ceil(reports.length / itemsPerPageReports);
   const totalPagesRescued = Math.ceil(rescuedAnimals.length / itemsPerPageRescued);
-  const totalPagesFalse = Math.ceil(falseReports.length / itemsPerPageFalse); // Total pages for false reports
+  const totalPagesFalse = Math.ceil(falseReports.length / itemsPerPageFalse); 
 
   const currentReports = sortedReports.slice(
     (currentPageReports - 1) * itemsPerPageReports,
@@ -76,7 +76,7 @@ const ReportsPage = () => {
     currentPageRescued * itemsPerPageRescued
   );
 
-  const currentFalseReports = sortedFalseReports.slice( // Current false reports
+  const currentFalseReports = sortedFalseReports.slice( 
     (currentPageFalse - 1) * itemsPerPageFalse,
     currentPageFalse * itemsPerPageFalse
   );
@@ -241,7 +241,7 @@ const ReportsPage = () => {
         </button>
       </div>
 
-      <h1>False Reports</h1> {/* New section for false reports */}
+      <h1>False Reports</h1> 
       <table className="report-details-table">
         <thead>
           <tr>

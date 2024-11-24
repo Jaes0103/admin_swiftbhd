@@ -1,12 +1,12 @@
-/* General Font Styles */
+
 body {
-  font-family: Arial, sans-serif; /* Set the font for the entire page */
-  line-height: 1.6; /* Improve readability */
+  font-family: Arial, sans-serif; 
+  line-height: 1.6; 
 }
 
-/* Main container to ensure page scrolls */
+
 html, body {
-  height: 100%; /* Ensures that the page takes the full height of the viewport */
+  height: 100%; 
   margin: 0;
   padding: 0;
   overflow-x: hidden; /* Prevent horizontal overflow (side scrolling) */

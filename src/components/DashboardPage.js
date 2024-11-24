@@ -18,7 +18,6 @@ const DashboardPage = () => {
   const [error, setError] = useState('');
   const [totalReports, setTotalReports] = useState(0);
 
-  // Pagination states
   const [currentPageReports, setCurrentPageReports] = useState(1);
   const [currentPageAnimals, setCurrentPageAnimals] = useState(1);
   const itemsPerPage = 5;
@@ -129,7 +128,6 @@ const DashboardPage = () => {
     circumference: 240,
   };
 
-  // Pagination logic for reports
   const indexOfLastReport = currentPageReports * itemsPerPage;
   const indexOfFirstReport = indexOfLastReport - itemsPerPage;
   const currentReports = reports.slice(indexOfFirstReport, indexOfLastReport);
@@ -147,7 +145,6 @@ const DashboardPage = () => {
     }
   };
 
-  // Pagination logic for adoptable animals
   const indexOfLastAnimal = currentPageAnimals * itemsPerPage;
   const indexOfFirstAnimal = indexOfLastAnimal - itemsPerPage;
   const currentAnimals = adoptableAnimals.slice(indexOfFirstAnimal, indexOfLastAnimal);

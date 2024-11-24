@@ -33,19 +33,17 @@ const LoginPage = () => {
       console.error('Login error:', error.response ? error.response.data : error.message);
       setError(error.response ? error.response.data.message : 'Failed to log in');
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
-
-  // Forgot password form submission
   const handleForgotPassword = async (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading
+    setLoading(true); 
     try {
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/admin/password-reset-request-admin`, { email });
       setResetMessage('Password reset link has been sent to your email.');
       setResetSuccess(true); 
-      setError(''); // Clear any error
+      setError(''); 
     } catch (error) {
       console.error('Forgot password error:', error.response ? error.response.data : error.message);
       setError(error.response ? error.response.data.message : 'Failed to send password reset link');

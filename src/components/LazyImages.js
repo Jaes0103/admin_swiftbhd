@@ -1,4 +1,4 @@
-// LazyImage.js
+
 import React, { useEffect, useRef, useState } from 'react';
 import '../style/LazyImages.css'
 

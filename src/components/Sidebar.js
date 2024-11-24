@@ -1,4 +1,3 @@
-// src/components/Sidebar.js
 import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom'; 
 import { FaTachometerAlt, FaFileAlt, FaHeart, FaPaw, FaCalendarAlt, FaUsers, FaSignOutAlt, FaMap } from 'react-icons/fa'; 

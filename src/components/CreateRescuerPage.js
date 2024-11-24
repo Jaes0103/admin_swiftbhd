@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Sidebar from './Sidebar';
-import '../style/CreateRescuerPage.css'; // Add CSS file for styles
+import '../style/CreateRescuerPage.css'; 
 
-// Function to evaluate password strength
 const passwordStrength = (password) => {
     const strengthCriteria = [
-        { regex: /.{8,}/, message: 'At least 8 characters' }, // Minimum length
+        { regex: /.{8,}/, message: 'At least 8 characters' }, 
         { regex: /[A-Z]/, message: 'At least one uppercase letter' },
         { regex: /[a-z]/, message: 'At least one lowercase letter' },
         { regex: /\d/, message: 'At least one number' },
@@ -175,7 +174,6 @@ const CreateRescuer = () => {
     );
 };
 
-// Helper functions for strength feedback
 const getStrengthColor = (strength) => {
     const colors = ['red', 'orange', 'yellow', 'lightgreen', 'green', 'darkgreen'];
     return colors[strength] || 'transparent';

@@ -10,7 +10,6 @@ import Sidebar from './Sidebar';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 
-// Function to create a custom marker icon
 const createMarkerIcon = (color) => {
     return L.divIcon({
         className: 'custom-marker',
@@ -25,7 +24,6 @@ const createMarkerIcon = (color) => {
     });
 };
 
-// Define marker colors
 const normalReportColor = '#8a7ebe'; 
 const falseReportColor = '#FFA500'; 
 const rescuedColor = '#32CD32'; 
@@ -37,7 +35,6 @@ const MapView = () => {
     useEffect(() => {
         const fetchReports = async () => {
             try {
-                // Fetch all reports in one go (you can also create a single endpoint that returns all necessary data)
                 const response = await fetch(`${baseURL}/api/admin/all-reports`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch reports');
