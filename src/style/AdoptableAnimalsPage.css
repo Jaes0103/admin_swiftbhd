@@ -1,179 +1,423 @@
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f7f9fc; 
+    color: #333;  
+    margin: 0;
+    padding: 0;
+  }
+
 .adoptable-animals-container{
-    margin-left: 400px;
+    margin-left: 200px;
 }
-.adoptable-animals-table {
-    width: 100%; 
-    height: 300px   ;
-    border-collapse: collapse; 
-    margin-bottom: 20px; 
-}
-.adoptable-container{
-    background-color: white; 
-    border-radius: 10px; 
-    padding: 20px; 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
-    margin-top: 90px; 
-    margin-left: -20px; 
-    margin-bottom: 20px;
-    width: 100%;
-
-}
-
-
-.adoptable-container .add-animal-button{
-    margin-left: 1450px;
-}
-.adoption-container{
-    background-color: white; 
-    border-radius: 10px; 
-    padding: 20px; 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
-    margin-top: 0px; 
-    margin-left: 5px; 
-    margin-bottom: 20px;
-    width: 100%;
-
-}
-
-.adoptable-animals-table th, 
-.adoptable-animals-table td {
+  
+  .report-table th {
+    padding: 20px 25px; /* Increased padding */
+    background-color: #8a7ebe;
+    color: #fff;
+    text-align: left;
+    font-size: 1rem; /* Increased font size */
+    font-weight: 700; /* Increased font weight */
+    text-transform: uppercase;
+  }
+  
+  /* Table cells */
+  .report-table td {
+    padding: 20px 25px; /* Increased padding */
     text-align: left; 
-    padding: 12px;
-}
-
-.adoptable-animals-table th {
-    background-color: #f4f4f4; 
-    font-weight: bold; 
-}
-
-.adoptable-animals-table tr:nth-child(even) {
+    font-size: 1rem; /* Increased font size */
+    font-weight: 400; /* Normal font weight for cells */
+    color: #495057;
+  }
+  
+  /* Row styles */
+  .report-table tr:nth-child(even) {
+    background-color: #f9f9f9;  
+  }
+  
+  /* Page Title */
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #8a7ebe;
+    margin-bottom: 20px;
+    text-align: left;
+    margin-left: 200px;
+  }
+  
+  /* Adoptable Animals Table */
+  .adoptable-animals-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+  
+  /* Table Header */
+  .adoptable-animals-table th, 
+  .adoptable-animals-table td {
+    text-align: left;
+    padding: 20px 25px; /* Increased padding for better readability */
+    font-size: 20px;
+    font-weight: 500; /* Regular font weight for cells */
+    color: #495057;
+  }
+  
+  .adoptable-animals-table th {
+    background-color: #8a7ebe;
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  
+  /* Row Styles */
+  .adoptable-animals-table tr:nth-child(even) {
     background-color: #f9f9f9;
-}
-.adoptable-animals-table tr:nth-child(odd) {
-    background-color: #f9f9f9; 
-}
-
-.adoptable-animals-table tr:hover {
-    background-color: #e2e6ea; 
-}
-
-.adoption-request-button {
+  }
+  
+  .adoptable-animals-table tr:hover {
+    background-color: #e2e6ea;
+  }
+  
+  /* Image Cell Styling */
+  .adoptable-animals-table td img {
+    max-width: 120px; /* Set size for adoptable animal images */
+    max-height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  /* Adoptable Animals Container */
+  .adoptable-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 90px;
+    margin-left: -20px;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  /* Add Animal Button */
+  .adoptable-container .add-animal-button {
+    margin-left: 1450px;
+  }
+  
+  /* Pagination */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  /* Pagination Buttons */
+  .pagination button {
+    background-color: #8a7ebe;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Hover Effect for Pagination Buttons */
+  .pagination button:hover {
+    background-color: #7064a5;
+  }
+  
+  /* Pagination Text */
+  .pagination span {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 500;
+  }
+  /* Adoption Request Button */
+  .adoption-request-button {
     padding: 12px 20px;
     margin-top: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%; 
+    width: 100%;
     font-size: 1em;
     transition: background-color 0.3s ease;
-}
-
-.adoption-request-button.submit {
-    background-color: #624DE3; 
+  }
+  
+  .adoption-request-button.submit {
+    background-color: #624DE3;
     color: white;
-}
-
-.adoption-request-button.cancel {
-    background-color: #f44336; 
+  }
+  
+  .adoption-request-button.cancel {
+    background-color: #f44336;
     color: white;
-}
-
-.adoption-request-button:hover {
-    opacity: 0.9; 
-}
-
-.pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0;
-}
-
-.pagination button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5rem;
-    margin: 0 10px;
-    color: #007bff; 
-}
-
-.pagination button:disabled {
-    color: #ccc; 
-    cursor: not-allowed;
-}
-
-.pagination span {
-    font-size: 1rem;
-}
-
-
-.adoption-requests-container {
-    margin: 30px; 
-}
-
-.adoption-requests-table {
-    width: 90%; 
-    margin: 0 auto; 
-    border-collapse: collapse; 
-}
-
-.adoption-requests-table th, 
-.adoption-requests-table td {
+  }
+  
+  .adoption-request-button:hover {
+    opacity: 0.9;
+  }
+  
+  /* Adoption Requests Table */
+  .adoption-requests-table {
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .adoption-requests-table th, 
+  .adoption-requests-table td {
     border: 1px solid #ccc;
     text-align: center;
-    padding: 12px; 
-}
-
-.adoption-requests-table th {
-    background-color: #f4f4f4; 
-    font-weight: bold; 
-}
-
-.adoption-requests-table tr:nth-child(even) {
-    background-color: #f9f9f9; 
-}
-
-.request-item {
+    padding: 12px;
+  }
+  
+  .adoption-requests-table th {
+    background-color: #8a7ebe;
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  
+  .adoption-requests-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .adoption-requests-table tr:hover {
+    background-color: #e2e6ea;
+  }
+  
+  /* Request Item Styling */
+  .request-item {
     padding: 15px;
-    border-bottom: 1px solid #ccc; 
-}
-
-.request-item:hover {
-    background-color: #f0f0f0; 
-}
-
-.request-status {
-    font-weight: bold; 
-}
-
-.request-status.approved {
-    color: green; 
-}
-
-.request-status.pending {
-    color: orange; 
-}
-
-.request-status.denied {
-    color: red; 
-}
-.form-grid {
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .request-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .request-status {
+    font-weight: bold;
+  }
+  
+  .request-status.approved {
+    color: green;
+  }
+  
+  .request-status.pending {
+    color: orange;
+  }
+  
+  .request-status.denied {
+    color: red;
+  }
+  
+  /* Form Grid for Adoption Request */
+  .form-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 16px; 
-}
-
-.form-group {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  .form-group {
     display: flex;
     flex-direction: column;
-}
-.dialog-box{
+  }
+  
+  /* Dialog Box */
+  .dialog-box {
     max-width: 1000px;
-    width: 1000px;
-}
-.error {
+    width: 100%;
+  }
+  
+  /* Error Styling */
+  .error {
     color: red;
     font-size: 12px;
     margin-top: 4px;
+  }
+  .adoption-container {
+    width: 100%;
+    max-width: 1700px;              
+    margin: 0 auto;                 
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    table-layout: fixed;            
+  }
+
+  .adoption-container th {
+    padding: 20px 25px; /* Increased padding */
+    background-color: #8a7ebe;
+    color: #fff;
+    text-align: left;
+    font-size: 1rem; /* Increased font size */
+    font-weight: 700; /* Increased font weight */
+    text-transform: uppercase;
+  }
+  
+  /* Table cells */
+  .adoption-container td {
+    padding: 20px 25px; /* Increased padding */
+    text-align: left; 
+    font-size: 20px; /* Increased font size */
+    font-weight: 500; /* Normal font weight for cells */
+    color: #495057;
+  }
+  
+  /* Row styles */
+  .adoption-container tr:nth-child(even) {
+    background-color: #f9f9f9;  
+  }
+
+  .details-modal {
+    position: fixed;
+    top: 0;
+    right: -100%;  
+    width: 75%;
+    height: 100%;
+    background-color: #e9e5fa;
+    z-index: 1000;
+    transition: right 0.10s ease-in-out; 
+    padding: 20px;
+    overflow-y: auto;
+    flex-direction: row; 
+    
+}
+.details-content {
+    display: flex;
+    flex-direction: row; 
+    gap: 20px;
+}
+
+.left-column,
+.right-column {
+    flex: 1;  
+}
+.right-column{
+    margin-top: 300px;
+}
+.left-column img {
+    width: 100%; 
+    height: auto;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 3em;
+    cursor: pointer;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.details-modal p{
+    padding: 20px;
+    font-size:x-large;
+    margin-left: 100px;
+}
+
+.details-modal img{
+    width: 300px;
+    height: 300px;
+    margin-left: 100px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.details-modal.show {
+    right: 0; 
+}
+.details-modal h3{
+    font-size: xx-large;
+    margin-left: 120px;
+    font-weight:bolder;
+    color: #333;
+}
+.Adoption-Request-Container{
+  background-color: #d0cae9;
+  border-radius: 20px;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.details-modal .edit{
+  margin-left: 110px;
+}
+.details-modal .edit .edit-button{
+  font-size: x-large;
+  width: 350px;
+  height: 70px;
+}
+.modal-overlay .modal-container{
+  background-color: #e9e5fa;
+  padding: 30px;
+  border-radius: 20px;
+  width: 1000px;
+}
+.edit-content{
+  flex-direction: row;
+}
+.edit-content label{
+  font-size: large;
+  padding: 16px;         
+}
+.edit-content input{
+  height: 40px;
+  font-size: 20px;
+}
+.edit-content .left-column .label-type{
+  margin-right: 330px;       
+}
+.edit-content .left-column .label-age{
+  margin-right: 115px;       
+}
+
+.modal-container .modal-actions{
+  margin-left: 20px;
+}
+.Adoption-Request-Container .modal-adoption-request .action-buttons{
+  margin-left: 110px;
+}
+.Adoption-Request-Container .modal-adoption-request .action-buttons .approve-button{
+  margin-right: 50px;
+}
+
+.adoption-container .adoption-notification {
+  color: red;
+  font-weight: bold;
+  margin-right: 8px;
+  cursor: pointer;
 }

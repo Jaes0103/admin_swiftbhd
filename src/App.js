@@ -1,9 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './components/LoginPage'; 
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import Login from './components/LoginPage';
 import Register from './components/RegisterPage';
 import Dashboard from './components/DashboardPage';
-import Reports from './components/ReportsPage';
+import PendingRescueReports from './components/PendingRescueReportsPage';
+import RescuedReports from './components/RescuedReportsPage';
+import FalseReports from './components/FalseReportsPage';
 import Adoption from './components/AdoptionRequestsPage';
 import Adoptable from './components/AdoptableAnimalPage';
 import AnimalList from './components/AnimalListPage';
@@ -11,21 +13,31 @@ import AnimalDetails from './components/AnimalDetailsPage';
 import Events from './components/EventsManager';
 import Rescuer from './components/CreateRescuerPage';
 import MapView from './components/MapViewPage';
-import NotFound from './components/NotFound'; // Import NotFound
+import NotFound from './components/NotFound';
+import ReportPreviewPage from './components/ReportPreviewPage'; // Import new report preview page
 import PrivateRoute from './config/PrivateRoute';
-import { useAuth } from './context/AuthContext';
+import { useAuth } from './context/AuthProvider';
+import { AuthProvider } from './context/AuthProvider'; // Import the AuthProvider for wrapping the app
 
 const App = () => {
-    const { isAuthenticated } = useAuth();
+    return (
+        <AuthProvider> {/* Wrap the entire app with AuthProvider */}
+            <Router>
+                <AppRoutes />
+            </Router>
+        </AuthProvider>
+    );
+};
+
+const AppRoutes = () => {
+    const location = useLocation();
+    const isAuthPage = location.pathname === '/' || location.pathname === '/register';
 
     return (
-        <Router>
+        <div className={isAuthPage ? 'auth-background' : ''}>
             <Routes>
-                {/* Public Routes */}
                 <Route path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-
-                {/* Protected Routes */}
                 <Route path="/adopt-animal" element={
                     <PrivateRoute>
                         <Adoptable />
@@ -36,11 +48,29 @@ const App = () => {
                         <Dashboard />
                     </PrivateRoute>
                 } />
-                <Route path="/reports" element={
+                {/* Reports Section */}
+                <Route path="/reports/pending-rescue" element={
                     <PrivateRoute>
-                        <Reports />
+                        <PendingRescueReports />
                     </PrivateRoute>
                 } />
+                <Route path="/reports/rescued" element={
+                    <PrivateRoute>
+                        <RescuedReports />
+                    </PrivateRoute>
+                } />
+                <Route path="/reports/false-reports" element={
+                    <PrivateRoute>
+                        <FalseReports />
+                    </PrivateRoute>
+                } />
+                {/* Report Preview Page Route */}
+                <Route path="/report-preview" element={
+                    <PrivateRoute>
+                        <ReportPreviewPage />
+                    </PrivateRoute>
+                } />
+                {/* Other Routes */}
                 <Route path="/adoption" element={
                     <PrivateRoute>
                         <Adoption />
@@ -71,10 +101,9 @@ const App = () => {
                         <MapView />
                     </PrivateRoute>
                 } />
-
                 <Route path="*" element={<NotFound />} />
             </Routes>
-        </Router>
+        </div>
     );
 };
 

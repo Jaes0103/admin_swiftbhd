@@ -17,6 +17,7 @@
 
 /* Sidebar header styling */
 .sidebar-header {
+  margin-top: 30px;
   margin-bottom: 30px;
 }
 
@@ -60,7 +61,7 @@
 }
 .sidebar .sidebar-link {
   font-family: 'Poppins', sans-serif;
-  font-size: 23px; /* Increased font size */
+  font-size: 23px; 
   text-decoration: none;
   color: white;
   padding: 10px;
@@ -70,7 +71,6 @@
   transition: background-color 0.3s ease;
 }
 
-/* Sidebar icons styling */
 .sidebar-icon {
   font-size: 30px; 
   margin-right: 10px;

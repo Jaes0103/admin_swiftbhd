@@ -8,12 +8,11 @@
     box-sizing: border-box; 
 }
 
-/* Form container styles */
 .form-container {
-    max-width: 400px; /* Set a maximum width for better responsiveness */
-    width: 100%; /* Full width on smaller screens */
-    margin-right: 50px; /* Right margin for spacing */
-    padding: 30px; /* Reduced padding for better spacing */
+    max-width: 600px; 
+    width: 100%; 
+    margin-right: 50px; 
+    padding: 30px; 
     background-color: #ffffff; /* Change to white */
     border-radius: 8px;
     border: 1px solid #ddd;
@@ -23,7 +22,7 @@
 
 /* Rescuers list styles */
 .rescuers-list {
-    max-width: 400px; /* Set max width to match form container */
+    max-width: 600px; /* Set max width to match form container */
     margin: 0; /* Remove unnecessary margin */
     padding: 30px;
     background-color: #ffffff; /* Change to white */

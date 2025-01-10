@@ -36,3 +36,40 @@
     transform: rotate(360deg);
   }
 }
+
+.auth-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-image: url('../assets/images/bantay_hayop_logo.png'); /* Ensure path is correct */
+  background-attachment: fixed;
+  background-position: center;
+  height: 100vh;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: inherit; 
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px); 
+  z-index: -1; 
+}
+
+/* Reset styles for non-auth pages */
+body:not(.auth-background) {
+  background: none; /* Removes background image for non-auth pages */
+  margin: 0;
+}
+body {
+  background-image: none !important;
+}

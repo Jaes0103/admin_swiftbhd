@@ -6,7 +6,8 @@ import { Line, Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faEye } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, ChartDataLabels);
 
@@ -17,24 +18,34 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [totalReports, setTotalReports] = useState(0);
-
+  const [rescuedAnimals, setRescuedAnimals] = useState([]);
+  const [falseReports, setFalseReports] = useState([]);
+  const [adoptions, setAdoptions] = useState([]);  
   const [currentPageReports, setCurrentPageReports] = useState(1);
   const [currentPageAnimals, setCurrentPageAnimals] = useState(1);
   const itemsPerPage = 5;
+  const navigate = useNavigate(); // For navigation to the Report Preview page
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
         const url = `${process.env.REACT_APP_BASE_URL}/api/admin/dashboard`;
         const response = await axios.get(url);
-        
-        if (response.data && response.data.reports && response.data.adoptableAnimals) {
-          setReports(response.data.reports);
-          setAdoptableAnimals(response.data.adoptableAnimals);
-          const reportCounts = getCountsByMonth(response.data.reports, 'created_at');
-          const rescuedCounts = getCountsByMonth(response.data.rescuedAnimals, 'rescued_date');
+  
+        if (response.data) {
+          const { reports, adoptableAnimals, rescuedAnimals, falseReports, adoptions } = response.data;
+          
+          setReports(reports);
+          setAdoptableAnimals(adoptableAnimals);
+          setRescuedAnimals(rescuedAnimals);
+          setFalseReports(falseReports);
+          setAdoptions(adoptions);
+  
+          const reportCounts = getCountsByMonth(reports, 'created_at');
+          const rescuedCounts = getCountsByMonth(rescuedAnimals, 'rescued_date');
+  
           setChartData(generateChartData(reportCounts, rescuedCounts));
-          setTotalReports(response.data.reports.length);
+          setTotalReports(reports.length);
         } else {
           setError('Invalid response structure');
         }
@@ -48,6 +59,7 @@ const DashboardPage = () => {
   
     fetchDashboardData();
   }, []);
+   
 
   const getCountsByMonth = (data, dateKey) => {
     const counts = new Array(12).fill(0);
@@ -162,6 +174,11 @@ const DashboardPage = () => {
     }
   };
 
+  // Navigate to report preview page
+  const handleReportPreview = () => {
+    navigate('/report-preview', { state: { reports, totalReports } });
+  };
+
   if (loading) {
     return <p>Loading data...</p>;
   }
@@ -174,10 +191,14 @@ const DashboardPage = () => {
     <div className="dashboard-container">
       <Sidebar />
       <div className="main-content">
+        <div className="top-panel"></div>
+
         <h1>Admin Dashboard</h1>
-        
-        <section className="dashboard-section">
+        <section className='dashboard-panel'>
           <h2>Reports</h2>
+          <button className="preview-report-btn" onClick={handleReportPreview}>
+            <FontAwesomeIcon icon={faEye} /> Preview Report
+          </button>
           {currentReports.length === 0 ? (
             <p>No reports available.</p>
           ) : (
@@ -200,7 +221,7 @@ const DashboardPage = () => {
                     <td>{report.animal_details}</td>
                     <td>{report.cruelty_details}</td>
                     <td>{new Date(report.created_at).toLocaleDateString()}</td>
-                    <td>{report.status}</td> 
+                    <td>{report.status}</td>
                   </tr>
                 ))}
               </tbody>
@@ -217,8 +238,8 @@ const DashboardPage = () => {
           </div>
         </section>
 
-        <section className="dashboard-section">
-          <h2>Adoptable Animals</h2>
+        <section className='dashboard-panel'>
+          <h3>Adoptable Animals</h3>
           {currentAnimals.length === 0 ? (
             <p>No adoptable animals available.</p>
           ) : (
@@ -263,7 +284,7 @@ const DashboardPage = () => {
 
       <div className='chart-position'>
         <section className="chart-section">
-          <h2>Reports vs Rescued Animals</h2>
+          <h2>Reports and Rescued Animals</h2>
           {chartData ? (
             <Line data={chartData} />
           ) : (

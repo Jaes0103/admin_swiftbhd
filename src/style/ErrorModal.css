@@ -29,7 +29,7 @@
 }
 
 .modal button {
-    background: #007bff; /* Bootstrap primary color */
+    background: #8a7ebe; /* Bootstrap primary color */
     color: white;
     border: none;
     padding: 10px 15px;
@@ -38,5 +38,5 @@
 }
 
 .modal button:hover {
-    background: #0056b3; /* Darker shade for hover effect */
+    background: #796dad; /* Darker shade for hover effect */
 }

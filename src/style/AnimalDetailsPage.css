@@ -9,8 +9,8 @@ html, body {
   height: 100%; 
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Prevent horizontal overflow (side scrolling) */
-  overflow-y: auto; /* Allow vertical scrolling */
+  overflow-x: hidden; 
+  overflow-y: auto;
 }
 
 .animal-details-page {
@@ -20,14 +20,14 @@ html, body {
   overflow-y: auto; 
 }
 .animal-box {
-  border: 1px solid #ccc; /* Add border */
-  border-radius: 8px; /* Rounded corners */
-  padding: 16px; /* Inner padding */
-  margin: 20px 0; /* Spacing above and below */
-  background-color: #f9f9f9; /* Background color */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  border: 1px solid #ccc;
+  border-radius: 8px; 
+  padding: 16px;
+  margin: 20px 0;
+  background-color: #f9f9f9; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
-/* Box Styling */
+
 .box {
   border: 1px solid #ccc; /* Light border */
   border-radius: 8px; /* Rounded corners */

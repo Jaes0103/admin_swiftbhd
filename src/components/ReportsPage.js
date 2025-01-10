@@ -11,10 +11,8 @@ const ReportsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [isRecent, setIsRecent] = useState(true);
-
   const [currentPageReports, setCurrentPageReports] = useState(1);
   const [itemsPerPageReports, setItemsPerPageReports] = useState(10);
-
   const [currentPageRescued, setCurrentPageRescued] = useState(1);
   const [itemsPerPageRescued, setItemsPerPageRescued] = useState(10);
 

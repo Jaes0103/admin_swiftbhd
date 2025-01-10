@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom'; 
-import { FaTachometerAlt, FaFileAlt, FaHeart, FaPaw, FaCalendarAlt, FaUsers, FaSignOutAlt, FaMap } from 'react-icons/fa'; 
+import { NavLink, useNavigate } from 'react-router-dom';
+import { FaTachometerAlt, FaFileAlt, FaHeart, FaPaw, FaCalendarAlt, FaUsers, FaSignOutAlt, FaMap, FaChevronDown } from 'react-icons/fa';
 
 import '../style/Sidebar.css';
-import ConfirmationModal from './ConfirmationModal'; 
-import { useAuth } from '../context/AuthContext'; 
+import ConfirmationModal from './ConfirmationModal';
+import { useAuth } from '../context/AuthContext';
 
 const Sidebar = () => {
-  const { logout } = useAuth(); 
+  const { logout } = useAuth();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isReportsExpanded, setReportsExpanded] = useState(false);
   const navigate = useNavigate();
 
   const handleLogoutClick = () => {
-    setModalOpen(true); 
+    setModalOpen(true);
   };
 
   const confirmLogout = () => {
-    logout(); 
-    navigate('/'); 
-    alert("Successfully logged out!"); 
+    logout();
+    navigate('/');
+    alert("Successfully logged out!");
   };
 
   const cancelLogout = () => {
     setModalOpen(false);
+  };
+
+  const toggleReportsSubmenu = () => {
+    setReportsExpanded(!isReportsExpanded);
   };
 
   return (
@@ -37,9 +42,32 @@ const Sidebar = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/reports" className="sidebar-link" activeClassName="active">
+          <button
+            className={`sidebar-link dropdown-toggle ${isReportsExpanded ? 'active' : ''}`}
+            onClick={toggleReportsSubmenu}
+          >
             <FaFileAlt className="sidebar-icon" /> Reports
-          </NavLink>
+            <FaChevronDown className={`dropdown-icon ${isReportsExpanded ? 'rotated' : ''}`} />
+          </button>
+          {isReportsExpanded && (
+            <ul className="submenu">
+              <li>
+                <NavLink to="/reports/pending-rescue" className="sidebar-link" activeClassName="active">
+                  Pending Rescue
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/reports/rescued" className="sidebar-link" activeClassName="active">
+                  Rescued
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/reports/false-reports" className="sidebar-link" activeClassName="active">
+                  False Reports
+                </NavLink>
+              </li>
+            </ul>
+          )}
         </li>
         <li>
           <NavLink to="/adopt-animal" className="sidebar-link" activeClassName="active">
@@ -62,7 +90,7 @@ const Sidebar = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/maps" className="sidebar-link" activeClassName="active"> 
+          <NavLink to="/maps" className="sidebar-link" activeClassName="active">
             <FaMap className="sidebar-icon" /> Map
           </NavLink>
         </li>

@@ -186,7 +186,7 @@ const AnimalList = () => {
     }
 
     return (
-        <div className="table-container">
+        <div>
             <h1>Animals in the Shelter</h1>
             <Sidebar />
             <button className="add-animal-button" onClick={() => setModalOpen(true)}>

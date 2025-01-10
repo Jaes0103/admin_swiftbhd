@@ -1,10 +1,9 @@
 
-/* Global Box-Sizing */
+
 * {
-  box-sizing: border-box; /* Apply this globally */
+  box-sizing: border-box;
 }
 
-/* Body Styles */
 body {
   display: flex;
   justify-content: center;
@@ -26,15 +25,14 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: inherit; /* Same image as background */
+  background-image: inherit; 
   background-size: cover;
   background-position: center;
-  filter: blur(10px); /* Adjust the blur level here */
-  z-index: -1; /* Places it behind content */
+  filter: blur(10px); 
+  z-index: -1; 
 }
 
 
-/* Main Container Styles */
 .Body-container {
   width: 600px;
   display: flex;
@@ -127,37 +125,36 @@ body::before {
   cursor: pointer; /* Pointer cursor on hover */
 }
 
-/* Login Button Styles */
+
 .login-button {
-  width: 100%; /* Full width */
-  padding: 16px; /* Padding */
-  background-color: #8a7ebe; /* Custom background color */
-  border: none; /* No border */
-  border-radius: 10px; /* Rounded corners */
-  color: #ffffff; /* White text */
-  font-size: 18px; /* Font size */
-  cursor: pointer; /* Pointer cursor */
-  transition: background-color 0.3s ease; /* Smooth transition */
+  width: 100%; 
+  padding: 16px; 
+  background-color: #8a7ebe; 
+  border: none; 
+  border-radius: 10px; 
+  color: #ffffff; 
+  font-size: 18px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease; 
 }
 
-/* Login Button Hover Effect */
 .login-button:hover {
-  background-color: #7a6eab; /* Darker shade on hover */
+  background-color: #7a6eab; 
 }
 
-/* Forgot Password Styles */
+
 .forgot-password {
-  display: inline-block; /* Make it inline-block to allow styling */
-  color: #8a7ebe; /* Custom color */
-  font-size: 18px; /* Font size */
-  cursor: pointer; /* Pointer cursor on hover */
-  text-decoration: none; /* Remove underline */
+  display: inline-block; 
+  color: #8a7ebe; 
+  font-size: 18px; 
+  cursor: pointer;
+  text-decoration: none; 
 }
 
-/* Register Link Styles */
+
 .register-link {
-  text-align: center; /* Center text */
-  color: #888; /* Light gray color */
+  text-align: center; 
+  color: #888; 
 }
 
 .register-link a {

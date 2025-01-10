@@ -1,0 +1,22 @@
+.confirm-disapprove-modal{
+    background-color: #d0cae9;
+    border-radius: 20px;
+    padding: 20px;
+    width: 800px;
+}
+.confirm-disapprove-modal h2{
+    font-size: xx-large;
+}
+.confirm-disapprove-modal .modal-actions .confirm-button{
+    background-color: #8a7ebe;
+    margin-right: 50px;
+}
+
+.confirm-disapprove-modal textarea{
+    font-size: 22px;
+    padding: 10px;
+    margin-left: 120px;
+    width: 500px;
+    height: 130px;
+
+}

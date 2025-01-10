@@ -8,9 +8,9 @@ const UpdateAnimalModal = ({ isOpen, onClose, onUpdateAnimal, animal }) => {
     const [location, setLocation] = useState('');
     const [personality, setPersonality] = useState('');
     const [status, setStatus] = useState('');
-    const [imgFile, setImgFile] = useState(null); // State for image file
+    const [imgFile, setImgFile] = useState(null); 
     const [gender, setGender] = useState('');
-    const [background, setBackground] = useState(''); // State for background text field
+    const [background, setBackground] = useState(''); 
 
     useEffect(() => {
         if (animal) {
@@ -46,11 +46,11 @@ const UpdateAnimalModal = ({ isOpen, onClose, onUpdateAnimal, animal }) => {
         };
 
         if (imgFile) {
-            updatedAnimal.imgFile = imgFile; // Include the image file in the object
+            updatedAnimal.imgFile = imgFile; 
         }
 
         onUpdateAnimal(animal.id, updatedAnimal);
-        onClose(); // Close the modal after submitting
+        onClose(); 
     };
 
     if (!isOpen) return null;

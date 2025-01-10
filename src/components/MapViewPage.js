@@ -107,7 +107,7 @@ const MapView = () => {
                         return (
                             <Marker key={index} position={[lat, lng]} icon={markerIcon}>
                                 <Popup>
-                                    <b>{report.animal_type}</b><br />
+                                    Report ID: <b>{report.id}</b><br />
                                     {report.animal_details}<br />
                                     <img src={report.image_url} alt="Animal Report" style={{ width: '100px', height: '100px' }} /><br />
                                     Reported on: {new Date(report.accident_date).toLocaleDateString()}
