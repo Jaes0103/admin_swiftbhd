@@ -1,9 +1,8 @@
-/* ReportPreviewPage.css */
-
 /* Container styling */
 .report-preview-container {
     margin: 20px;
     padding: 20px;
+    width: 1850px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -72,13 +71,20 @@
     color: white;
   }
   
-  .actions .back-button {
-    background-color: #ff0000;
-    color: white;
+  .report-actions .back-button {
+    background-color: #ffffff;
+    color: black;
+    padding-left: 20px;
+    border: 3px solid #7b03b3f5; 
   }
   
   .actions .download-button {
     background-color: #0066cc;
     color: white;
   }
-  
+  .report-actions .download-pdf-btn{
+    margin-right: 20px;
+  }
+  .report-details{
+    margin-left: 30px;
+  }

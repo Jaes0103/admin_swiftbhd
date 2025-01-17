@@ -1,324 +1,221 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';  
-import { jsPDF } from 'jspdf';
-import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { jsPDF } from 'jspdf';  
+import 'jspdf-autotable';  
+import '../style/ReportPreviewPage.css';
 import logo from '../assets/images/bantay_hayop_logo.jpg';
 
 const ReportPreviewPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  
-  // State management
-  const [reports, setReports] = useState([]);
-  const [rescuedAnimals, setRescuedAnimals] = useState([]);
-  const [falseReports, setFalseReports] = useState([]);
-  const [adoptions, setAdoptions] = useState([]);
-  const [totalReports, setTotalReports] = useState(0);
-  const [totalUnsuccessfulReports, setTotalUnsuccessfulReports] = useState(0);
-  const [totalProcessingReports, setTotalProcessingReports] = useState(0);
-  const [totalAnimalsInShelter, setTotalAnimalsInShelter] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { filteredReports, startDate, endDate } = location.state || {};
 
-  // Fetch dashboard data on mount
-  useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        const url = `${process.env.REACT_APP_BASE_URL}/api/admin/dashboard`;
-        const response = await axios.get(url);
+  if (!filteredReports) {
+    return <p>No reports available.</p>;
+  }
 
-        if (response.data) {
-          const { reports, adoptableAnimals, rescuedAnimals, falseReports, adoptions } = response.data;
-          setReports(reports);
-          setRescuedAnimals(rescuedAnimals);
-          setFalseReports(falseReports);
-          setAdoptions(adoptions);
+  // Count total reports and categorized reports
+  const totalReports = filteredReports.length;
+  const totalRescued = filteredReports.filter(report => report.status === 'Rescued').length;
+  const totalFalseReports = filteredReports.filter(report => report.status === 'False').length;
+  const totalUnsuccessful = filteredReports.filter(report => report.status === 'Unsuccessful').length;
 
-          // Set total counts
-          setTotalReports(reports.length);
-          setTotalUnsuccessfulReports(response.data.summary.totalUnsuccessfulReports);
-          setTotalProcessingReports(response.data.summary.totalProcessingReports);
-          setTotalAnimalsInShelter(response.data.summary.totalAnimalsInShelter);
-        } else {
-          setError('Invalid response structure');
-        }
-      } catch (err) {
-        console.error('Fetch error:', err.response ? err.response.data : err);
-        setError('Error fetching data');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDashboardData();
-  }, []);
-
-  // Helper function to get counts by month
-  const getCountsByMonth = (data, dateKey) => {
-    const counts = new Array(12).fill(0);
-    if (Array.isArray(data)) {
-      data.forEach(item => {
-        const dateString = item[dateKey];
-        const date = new Date(dateString);
-  
-        // Skip invalid dates (set to 0 counts for months with invalid dates)
-        if (isNaN(date.getTime())) {
-          return; // Skip this entry if the date is invalid
-        }
-  
-        const month = date.getMonth();
-        counts[month]++;
-      });
-    }
-    return counts;
-  };
-  
-  
-  const getCountsByYear = (data, dateKey) => {
-    const counts = {};
-    if (Array.isArray(data)) {
-      data.forEach(item => {
-        const dateString = item[dateKey];
-        const date = new Date(dateString);
-        if (isNaN(date.getTime())) {
-          return; // Skip this entry if the date is invalid
-        }
-        const year = date.getFullYear();
-        if (!counts[year]) {
-          counts[year] = 0;
-        }
-        counts[year]++;
-      });
-    }
-    return counts;
-  };
-  
-  
-
-  const months = new Array(12).fill(0).map((_, i) => new Date(0, i).toLocaleString('default', { month: 'short' }));
-
-  
-  const generatePDF = () => {
+  const generatePDF = (filteredReports, startDate, endDate) => {
     const doc = new jsPDF();
-    doc.addImage(logo, 'PNG', 20, 10, 30, 30);
-    const pageWidth = doc.internal.pageSize.width;
 
-    doc.setFont('Helvetica', 'bold');
-    doc.setFontSize(20);
-    doc.text('Bantay Hayop Davao Report', pageWidth / 2, 30, { align: 'center' });
+    doc.addImage(logo, 'PNG', 25, 10, 30, 30); 
+
+    const startDateText = new Date(startDate).toLocaleDateString();
+    const endDateText = new Date(endDate).toLocaleDateString();
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString();
+    const formattedTime = currentDate.toLocaleTimeString();
+    doc.setTextColor(2, 43, 89); 
+    doc.setFont('arial', 'black');
+    doc.setFontSize(30); 
+    doc.text("Bantay Hayop Davao Reports", 60, 30);
+    doc.setLineWidth(0.3);
+    doc.setDrawColor(128, 128, 128);
+    doc.line(13, 40, 195, 40); 
+
+    doc.setFont('helvetica', 'bold'); 
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`From:`, 14, 47);
+    doc.text(`To:`, 14, 52);
+    doc.text(`Generated at:`, 14, 57); 
+
+    doc.setFont('helvetica', 'normal'); 
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`${startDateText}`, 40, 47);
+    doc.text(`${endDateText}`, 40, 52);
+    doc.text(`${formattedDate} ${formattedTime}`, 40, 57); 
+
+    doc.setLineWidth(0.3); 
+    doc.setDrawColor(128, 128, 128);
+    doc.line(13, 60, 195, 60); 
+    doc.setTextColor(0, 0, 0); 
+    doc.setFont('helvetica', 'bold'); 
+    doc.setFontSize(12);
+    doc.text("Animal Cruelty Reports - Filtered Data", 70, 65);
+    doc.setFont('helvetica', 'normal'); 
+    doc.setFontSize(10);
+    doc.text(
+      `This report contains the details of animal cruelty reports filed between `, 14, 70
+    );
+
+    doc.setTextColor(255, 0, 0); 
+    doc.text(startDateText, 124, 70); 
+    doc.setTextColor(0, 0, 0); 
+    doc.text("and", 145, 70);
+    doc.setTextColor(255, 0, 0); 
+    doc.text(endDateText, 155, 70); 
+
+    doc.setTextColor(0, 0, 0); 
+    doc.text(".", 270, 70);
 
     doc.setFontSize(10);
-    doc.setFont('Helvetica', 'normal');
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, pageWidth - 50, 40);
+    doc.text(`Total Reports: ${totalReports}`, 14, 75);
+    doc.text(`Total Rescued: ${totalRescued}`, 14, 80);
+    doc.text(`Total False Reports: ${totalFalseReports}`, 14, 85);
+    doc.text(`Total Unsuccessful: ${totalUnsuccessful}`, 14, 90);
 
+    doc.text("", 14, 110);
     doc.setFontSize(12);
-    doc.setFont('Helvetica', 'bold');
-    doc.text('Report Overview:', 20, 50);
-
-    doc.setFontSize(8);
-    doc.setFont('Helvetica', 'normal');
-    doc.text(
-      'This report summarizes the animal rescue, adoption, false reports, and total reports generated by Bantay Hayop Davao in the past year.',
-      20,
-      55
-    );
-    doc.text(
-      'The following sections provide a breakdown of reports by month and year.',
-      20,
-      60
-    );
-
-    doc.setFontSize(12);
-    doc.setFont('Helvetica', 'bold');
-    doc.text('Summary:', 20, 65);
-
-    doc.setFontSize(10);
-    doc.setFont('Helvetica', 'normal');
-    let y = 70;
-    const lineSpacing = 5;
-    doc.text(`Total Reports: ${totalReports}`, 20, y);
-    doc.text(`Total Adoptions: ${adoptions.length}`, 20, (y += lineSpacing));
-    doc.text(`Total Rescues: ${rescuedAnimals.length}`, 20, (y += lineSpacing));
-    doc.text(`Total False Reports: ${falseReports.length}`, 20, (y += lineSpacing));
-    doc.text(`Total Unsuccessful Rescues: ${totalUnsuccessfulReports}`, 20, (y += lineSpacing));
-    doc.text(`Total Processing Reports: ${totalProcessingReports}`, 20, (y += lineSpacing));
-    doc.text(
-      `Total Animals in the Shelter: ${totalAnimalsInShelter}`,
-      20,
-      (y += lineSpacing)
-    );
-
-    doc.setFontSize(12);
-    doc.setFont('Helvetica', 'bold');
-    doc.text('Reports by Month:', 20, (y += lineSpacing + 5));
-
-    doc.setFontSize(8);
-    let yOffset = y + 5;
-    doc.text('Month', 20, yOffset);
-    doc.text('Reports', 50, yOffset);
-    doc.text('Rescued', 90, yOffset);
-    doc.text('False Reports', 130, yOffset);
-    doc.text('Adoptions', 170, yOffset);
-    yOffset += lineSpacing;
-
-    const reportCounts = getCountsByMonth(reports, 'created_at');
-    const rescuedCounts = getCountsByMonth(rescuedAnimals, 'rescued_date');
-    const falseReportCounts = getCountsByMonth(falseReports, 'false_report_date');
-    const adoptionCounts = getCountsByMonth(adoptions, 'adoption_date');
-
-    months.forEach((month, index) => {
-      doc.text(month, 20, yOffset);
-      doc.text(reportCounts[index].toString(), 50, yOffset);
-      doc.text(rescuedCounts[index].toString(), 90, yOffset);
-      doc.text(falseReportCounts[index].toString(), 130, yOffset);
-      doc.text(adoptionCounts[index].toString(), 170, yOffset);
-      yOffset += lineSpacing;
+    doc.setFont('Arial', 'bold'); 
+    doc.text(`Reports List `, 14, 100);
+    doc.autoTable({
+      startY: 105,
+      head: [
+        ["ID", "Animal Type", "Details", "Location", "Date Created", "Status"],
+      ],
+      body: filteredReports.map((report) => [
+        report.id,
+        report.animal_type,
+        report.animal_details,
+        report.location.replace(/Davao Region, 8000, Pilipinas/g, ""),
+        new Date(report.created_at).toLocaleDateString(),
+        report.status,
+      ]),
+      theme: "grid",  
+      styles: {
+        fontSize: 10,  
+        cellPadding: 3,  
+        lineWidth: 0,  
+        halign: "center",  
+      },
+      headStyles: {
+        fillColor: [169, 169, 169],  
+        textColor: 0,  
+        fontSize: 10,  
+        halign: "center",  
+        valign: "middle",  
+        lineWidth: 0,  
+      },
+      bodyStyles: {
+        fontSize: 10,  
+        halign: "center",  
+        valign: "middle",  
+        textColor: 0,  
+        lineWidth: 0,  
+      },
+      alternateRowStyles: {
+        fillColor: [240, 240, 240],  
+      },
     });
 
-    doc.setFontSize(12);
-    doc.setFont('Helvetica', 'bold');
-    // doc.text('Reports by Year:', 20, yOffset + lineSpacing);
+    doc.setFontSize(8); 
+    doc.setTextColor(0, 0, 0);
+    const firstColumn = "Bantay Hayop Davao | Malagamot, Davao City, Philippines | bantayhayopdavao@gmail.com";
+    const secondColumn = "Phone: +63 123 456 7890 | Facebook: facebook.com/BantayHayopDavao";
 
-    // doc.setFontSize(8);
-    // yOffset += lineSpacing + 5;
-    // doc.text('Year', 20, yOffset);
-    // doc.text('Reports', 50, yOffset);
-    // doc.text('Rescued', 90, yOffset);
-    // doc.text('False Reports', 130, yOffset);
-    // doc.text('Adoptions', 170, yOffset);
-    // yOffset += lineSpacing;
+    const pageWidth = doc.internal.pageSize.width;
+    const yPositionFooter = doc.internal.pageSize.height - 20;
 
-    const years = [
-      ...new Set([
-        ...reports.map(item => new Date(item.created_at).getFullYear()),
-        ...rescuedAnimals.map(item => new Date(item.rescued_date).getFullYear()),
-        ...falseReports.map(item => new Date(item.false_report_date).getFullYear()),
-        ...adoptions.map(item => new Date(item.adoption_date).getFullYear()),
-      ]),
-    ].sort((a, b) => a - b); // Sorting years for consistent display
-    const reportYearCounts = getCountsByYear(reports, 'created_at');
-    const rescuedYearCounts = getCountsByYear(rescuedAnimals, 'rescued_date');
-    const falseReportYearCounts = getCountsByYear(falseReports, 'false_report_date');
-    const adoptionYearCounts = getCountsByYear(adoptions, 'adoption_date');
+    const firstColumnWidth = doc.getStringUnitWidth(firstColumn) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+    const xPositionFirstColumn = (pageWidth - firstColumnWidth) / 2;
 
-    // years.forEach(year => {
-    //   doc.text(year.toString(), 20, yOffset);
-    //   doc.text((reportYearCounts[year] || 0).toString(), 50, yOffset);
-    //   doc.text((rescuedYearCounts[year] || 0).toString(), 90, yOffset);
-    //   doc.text((falseReportYearCounts[year] || 0).toString(), 130, yOffset);
-    //   doc.text((adoptionYearCounts[year] || 0).toString(), 170, yOffset);
-    //   yOffset += lineSpacing;
-    // });
-    
-    doc.setFontSize(6);
-    const footerText1 = 'Bantay Hayop Davao | Contact: info@bantayhayop.com | Phone: +63 912 345 6789';
-    const footerText2 = 'Address: Malagamot, Davao City, Philippines';
-    const footerWidth1 = doc.getStringUnitWidth(footerText1) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-    const footerWidth2 = doc.getStringUnitWidth(footerText2) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-    const xPosition1 = (pageWidth - footerWidth1) / 2;
-    const xPosition2 = (pageWidth - footerWidth2) / 2;
-    doc.setFont('Helvetica', 'normal');
-    doc.text(footerText1, xPosition1, yOffset + 10);
-    doc.text(footerText2, xPosition2, yOffset + 15);
-    doc.save('Bantay_Hayop_Davao_Report.pdf');
+    doc.text(firstColumn, xPositionFirstColumn, yPositionFooter);
 
+    const yPositionSecondColumn = yPositionFooter + 6;
+
+    const secondColumnWidth = doc.getStringUnitWidth(secondColumn) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+    const xPositionSecondColumn = (pageWidth - secondColumnWidth) / 2;
+
+    doc.text(secondColumn, xPositionSecondColumn, yPositionSecondColumn);
+
+    doc.save(`animal-cruelty-report-${startDate}-${endDate}.pdf`);
   };
 
   return (
-    <div className="report-preview-container" style={{ fontFamily: 'Arial, sans-serif', margin: '20px' }}>
-      <h1 
-        style={{ 
-          fontSize: '48px', 
-          color: '#0066cc', 
-          textAlign: 'center', 
-          marginBottom: '20px', 
-          fontWeight: '900',  
-          fontFamily: "'Arial Black', Gadget, sans-serif" 
-        }}
-      >
-        Bantay Hayop Davao Annual Report
-      </h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>Error loading data: {error}</p>
-      ) : (
-        <>
-          <section className="report-summary" style={{ marginBottom: '30px' }}>
-            <h2 style={{ fontSize: '24px', color: '#333333' }}>Report Summary</h2>
-            <p style={{ fontSize: '18px', color: '#000000' }}>
-              <strong>Total Reports:</strong> {totalReports}
-            </p>
-            <p style={{ fontSize: '18px', color: '#000000' }}>
-              <strong>Total Unsuccessful Reports:</strong> {totalUnsuccessfulReports}
-            </p>
-            <p style={{ fontSize: '18px', color: '#000000' }}>
-              <strong>Total Processing Reports:</strong> {totalProcessingReports}
-            </p>
-            <h3 style={{ fontSize: '20px', color: '#0066cc' }}>Reports by Month</h3>
-            <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '20px' }}>
-              <thead>
-                <tr>
-                  <th style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'center' }}>Month</th>
-                  <th style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'center' }}>Reports</th>
-                  <th style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'center' }}>Rescued</th>
-                  <th style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'center' }}>False Reports</th>
-                  <th style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'center' }}>Adoptions</th>
+    <div className="report-preview-container">
+      <header className="report-header">
+        <h1>Report Preview</h1>
+        <p>Below are the filtered reports from {new Date(startDate).toLocaleDateString()} to {new Date(endDate).toLocaleDateString()}</p>
+      </header>
+
+      <section className="report-introduction">
+        <p>
+          This document contains reports that fall within the selected date range. 
+          The data is compiled based on various animal cruelty cases reported during this period. 
+          Below you can see the details for each report, including the animal type, status, and location of the incident.
+        </p>
+      </section>
+
+      <section className="report-details">
+        <h3>Summary of Report Details</h3>
+        <ul>
+          <li><strong>Total Reports:</strong> {totalReports}</li>
+          <li><strong>Total Rescued:</strong> {totalRescued}</li>
+          <li><strong>Total False Reports:</strong> {totalFalseReports}</li>
+          <li><strong>Total Unsuccessful:</strong> {totalUnsuccessful}</li>
+        </ul>
+      </section>
+
+      <section className="report-table">
+        {filteredReports.length === 0 ? (
+          <p>No reports found for the selected date range.</p>
+        ) : (
+          <table className="report-preview-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Animal Type</th>
+                <th>Details</th>
+                <th>Location</th>
+                <th>Date Created</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredReports.map((report) => (
+                <tr key={report.id}>
+                  <td>{report.id}</td>
+                  <td>{report.animal_type}</td>
+                  <td>{report.animal_details}</td>
+                  <td>{report.location.replace(/Davao Region, 8000, Pilipinas/g, "")}</td>
+                  <td>{new Date(report.created_at).toLocaleDateString()}</td>
+                  <td>{report.status}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {months.map((month, index) => (
-                  <tr key={index}>
-                    <td style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'center' }}>{month}</td>
-                    <td style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'center' }}>
-                      {getCountsByMonth(reports, 'created_at')[index]}
-                    </td>
-                    <td style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'center' }}>
-                      {getCountsByMonth(rescuedAnimals, 'rescued_date')[index]}
-                    </td>
-                    <td style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'center' }}>
-                      {getCountsByMonth(falseReports, 'false_report_date')[index]}
-                    </td>
-                    <td style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'center' }}>
-                      {getCountsByMonth(adoptions, 'adoption_date')[index]}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </section>
-          <section className="report-actions" style={{ textAlign: 'center', marginTop: '20px' }}>
-            <button
-              onClick={() => navigate(-1)}
-              style={{
-                marginRight: '10px',
-                padding: '10px 20px',
-                fontSize: '16px',
-                backgroundColor: '#cccccc',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer'
-              }}
-            >
-              Back
-            </button>
-            <button
-              onClick={generatePDF}
-              style={{
-                padding: '10px 20px',
-                fontSize: '16px',
-                backgroundColor: '#0066cc',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer'
-              }}
-            >
-              Generate PDF
-            </button>
-          </section>
-        </>
-      )}
+              ))}
+            </tbody>
+          </table>
+        )}
+      </section>
+
+      <section className="report-actions">
+        <button className="download-pdf-btn" onClick={() => generatePDF(filteredReports, startDate, endDate)}>
+          Download as PDF
+        </button>
+        <button className="back-button" onClick={() => navigate('/dashboard')}>
+          Back to Dashboard
+        </button>
+      </section>
+
+      <footer className="report-footer">
+        <p>Generated on {new Date().toLocaleDateString()} by Bantay Hayop Davao</p>
+      </footer>
     </div>
   );
 };

@@ -23,8 +23,10 @@ const DashboardPage = () => {
   const [adoptions, setAdoptions] = useState([]);  
   const [currentPageReports, setCurrentPageReports] = useState(1);
   const [currentPageAnimals, setCurrentPageAnimals] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dateRange, setDateRange] = useState({ startDate: '', endDate: '' });
   const itemsPerPage = 5;
-  const navigate = useNavigate(); // For navigation to the Report Preview page
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -173,6 +175,19 @@ const DashboardPage = () => {
       setCurrentPageAnimals(currentPageAnimals - 1);
     }
   };
+  const handleDateSubmit = (startDate, endDate) => {
+    setDateRange({ startDate, endDate });
+    setIsModalOpen(false);
+  
+    const filteredReports = reports.filter((report) => {
+      const reportDate = new Date(report.created_at);
+      return reportDate >= new Date(startDate) && reportDate <= new Date(endDate);
+    });
+    navigate('/report-preview', { state: { filteredReports, startDate, endDate } });
+  };  
+  
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   // Navigate to report preview page
   const handleReportPreview = () => {
@@ -189,16 +204,49 @@ const DashboardPage = () => {
 
   return (
     <div className="dashboard-container">
+    
       <Sidebar />
       <div className="main-content">
         <div className="top-panel"></div>
-
         <h1>Admin Dashboard</h1>
         <section className='dashboard-panel'>
-          <h2>Reports</h2>
-          <button className="preview-report-btn" onClick={handleReportPreview}>
+        <button className="preview-report-btn" onClick={handleOpenModal}>
             <FontAwesomeIcon icon={faEye} /> Preview Report
           </button>
+          {isModalOpen && (
+            <div className="modal">
+                <h2>Select Date Range</h2>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const startDate = e.target.startDate.value;
+                    const endDate = e.target.endDate.value;
+                    if (new Date(startDate) > new Date(endDate)) {
+                      alert('Start date cannot be after end date.');
+                      return;
+                    }
+                    handleDateSubmit(startDate, endDate);
+                  }}
+                >
+                  <label>
+                    Start Date:
+                    <input type="date" name="startDate" required />
+                  </label>
+                  <label>
+                    End Date:
+                    <input type="date" name="endDate" required />
+                  </label>
+                  <div>
+                    <button type="submit">Submit</button>
+                    <button type="button" onClick={handleCloseModal}>
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+          
+          )}
+          <h2>Reports</h2>
           {currentReports.length === 0 ? (
             <p>No reports available.</p>
           ) : (
