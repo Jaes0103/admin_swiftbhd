@@ -98,32 +98,42 @@ const ReportPreviewPage = () => {
         new Date(report.created_at).toLocaleDateString(),
         report.status,
       ]),
-      theme: "grid",  
+      theme: "grid",
       styles: {
-        fontSize: 10,  
-        cellPadding: 3,  
-        lineWidth: 0,  
-        halign: "center",  
+        fontSize: 10,
+        cellPadding: 3,
+        lineWidth: 0,  // No border for cells
+        halign: "left",  // Left align all cells
       },
       headStyles: {
-        fillColor: [169, 169, 169],  
-        textColor: 0,  
-        fontSize: 10,  
-        halign: "center",  
-        valign: "middle",  
-        lineWidth: 0,  
+        fillColor: [240, 240, 240],  // Header background color
+        textColor: 0,  // Black text color
+        fontSize: 10,
+        halign: "left",  // Left align the header
+        valign: "middle",
+        lineWidth: 0,  // No border for header
       },
       bodyStyles: {
-        fontSize: 10,  
-        halign: "center",  
-        valign: "middle",  
-        textColor: 0,  
-        lineWidth: 0,  
+        fontSize: 10,
+        halign: "left",  // Left align the body
+        valign: "middle",
+        textColor: 0,  // Black text color
+        lineWidth: 0,  // No border for body cells
       },
       alternateRowStyles: {
-        fillColor: [240, 240, 240],  
+        fillColor: [255, 255, 255],  // White background for alternate rows
       },
+      margin: { top: 20 },  // Optional: adjust the top margin for better layout
+      rowHeight: 10,  // Optional: adjust row height if needed
+      didDrawCell: (data) => {
+        if (data.row.index > 0) {  // Only draw line for rows (skip first row)
+          doc.setLineWidth(0.1); // Row separator line thickness
+          doc.line(data.cell.x, data.cell.y + data.cell.height, data.cell.x + data.cell.width, data.cell.y + data.cell.height);  // Draw horizontal line at the bottom of each row
+        }
+      }
     });
+    
+    
 
     doc.setFontSize(8); 
     doc.setTextColor(0, 0, 0);
